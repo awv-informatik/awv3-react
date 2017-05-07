@@ -4,11 +4,20 @@ import { Canvas, View, Csys } from 'awv3-react'
 
 class Test extends React.Component {
     componentDidMount() {
-        // Get view and add the sessions pool into its scene
+        // Link view
         this.view = this.refs.view.getInterface()
+        // Add geometry
+        const box = new THREE.Mesh(
+            new THREE.BoxBufferGeometry(100, 100, 100),
+            new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.5, color: new THREE.Color('green') })
+        )
+        this.view.scene.add(box)
+        this.view.updateBounds().controls.focus().zoom()
     }
 
-    onDoubleClick = () => this.view.updateBounds().controls.focus().zoom()
+    onDoubleClick = () =>
+        // Center view on double-click
+        this.view.updateBounds().controls.focus().zoom()
 
     render() {
         return (
