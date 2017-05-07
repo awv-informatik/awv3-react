@@ -1,0 +1,27 @@
+{
+  "name": "awv3-react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awv-informatik/awv3-react.git"
+  },
+  "author": "Paul Henschel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/awv-informatik/awv3-react/issues"
+  },
+  "homepage": "https://github.com/awv-informatik/awv3-react#readme",
+  "dependencies": {
+    "prop-types": "^15.5.8"
+  },
+  "devDependencies": {
+    "awv3": "^7.0.52",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  }
+}

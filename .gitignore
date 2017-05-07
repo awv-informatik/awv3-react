@@ -1,0 +1,15 @@
+/node_modules/
+build/
+npm-debug.log
+/.tmp/
+/.grunt/
+/.happypack/
+/.cache-loader/
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+# User-specific stuff:
+.idea/workspace.xml
+.idea/tasks.xml
