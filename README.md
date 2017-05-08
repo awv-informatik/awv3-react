@@ -69,7 +69,9 @@ class Test extends React.Component {
 
     render() {
         return (
-            <Session ref="session" url="http://localhost:8181/" materials={materials} resources={resources}>
+            <Session
+                ref="session"
+                url="http://localhost:8181/">
                 <input type="file" onChange={this.handleOpenFile} />
             </Session>
         );
