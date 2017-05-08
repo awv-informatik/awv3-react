@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Canvas as CanvasImpl } from 'awv3';
 
 export default class Canvas extends React.PureComponent {
-    static propTypes = { resolution: React.PropTypes.number };
-    static childContextTypes = { canvas: React.PropTypes.object };
+    static propTypes = { resolution: PropTypes.number };
+    static childContextTypes = { canvas: PropTypes.object };
     onContextMenu = event => event.preventDefault();
 
     getChildContext() {

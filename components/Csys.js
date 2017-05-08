@@ -1,13 +1,13 @@
 import * as THREE from 'three';
-
 import React from 'react';
+import PropTypes from 'prop-types';
 import Canvas from './Canvas';
 import View from './View';
 import Object3 from 'awv3/three/object3';
 import Presentation from 'awv3/misc/presentation';
 
 export default class Csys extends React.Component {
-    static contextTypes = { session: React.PropTypes.object, view: React.PropTypes.object };
+    static contextTypes = { session: PropTypes.object, view: PropTypes.object };
     componentDidMount() {
         const viewSession = this.context.view;
         const viewCsys = this.refs.view.getInterface();
@@ -16,7 +16,7 @@ export default class Csys extends React.Component {
         const viewCubeFaces = new THREE.Object3D();
         const texturePaths = {};
         for (texName of ['mzz', 'pzz', 'zmz', 'zpz', 'zzm', 'zzp'])
-            texturePaths[texName] = require('../resources/textures/viewcube/' + texName + '.png');
+            texturePaths[texName] = require('../assets/csys/' + texName + '.png');
 
         const shader = THREE.MeshBasicMaterial;
         const shaderProps = {
@@ -25,7 +25,7 @@ export default class Csys extends React.Component {
             polygonOffsetFactor: 1.0,
             polygonOffsetUnits: 5.0,
             transparent: true,
-            opacity: 0.65
+            opacity: 0.65,
         };
 
         for (var sx = -1; sx <= 1; sx++)
@@ -41,7 +41,7 @@ export default class Csys extends React.Component {
                         var size = 2 * radius * (1 - chamfer);
                         geometry = new THREE.PlaneGeometry(size, size);
                         //set material (load texture)
-                        var letter = s => s === 0 ? 'z' : s < 0 ? 'm' : 'p';
+                        var letter = s => (s === 0 ? 'z' : s < 0 ? 'm' : 'p');
                         var texName = letter(sx) + letter(sy) + letter(sz);
                         material = new shader({ ...shaderProps });
                         new THREE.TextureLoader().load(texturePaths[texName], function(texture) {
@@ -79,7 +79,7 @@ export default class Csys extends React.Component {
                         geometry.vertices.push(
                             new THREE.Vector3(-0.5, Math.sqrt(1 / 3) / 2, 0).multiplyScalar(side),
                             new THREE.Vector3(0.5, Math.sqrt(1 / 3) / 2, 0).multiplyScalar(side),
-                            new THREE.Vector3(0, -Math.sqrt(1 / 3), 0).multiplyScalar(side)
+                            new THREE.Vector3(0, -Math.sqrt(1 / 3), 0).multiplyScalar(side),
                         );
                         geometry.faces.push(new THREE.Face3(0, 1, 2));
                         if (sy > 0) geometry.scale(-1, -1, -1);
@@ -116,7 +116,7 @@ export default class Csys extends React.Component {
                         [Object3.Events.Interaction.Unhovered]: data => {
                             data.material.animate({ color: new THREE.Color(0xffffff) }).start(1000);
                         },
-                        [Object3.Events.Interaction.Clicked]: () => viewSession.controls.rotate(a1, a2)
+                        [Object3.Events.Interaction.Clicked]: () => viewSession.controls.rotate(a1, a2),
                     });
                 }
         //add wireframe geometry
@@ -129,7 +129,7 @@ export default class Csys extends React.Component {
             geom.vertices = pts;
             var lines = new THREE.Line(
                 geom,
-                new THREE.LineBasicMaterial({ color: 0, transparent: true, opacity: 0.1 })
+                new THREE.LineBasicMaterial({ color: 0, transparent: true, opacity: 0.1 }),
             );
             lines.renderOrder = -1000;
             face.matrix.decompose(lines.position, lines.quaternion, lines.scale);
@@ -142,7 +142,7 @@ export default class Csys extends React.Component {
             shadowHeight: 0.7,
             ambient: 1,
             shadowFactor: 1.3,
-            lights: false
+            lights: false,
         });
 
         viewCsys.scene.add(presentation);
@@ -151,7 +151,7 @@ export default class Csys extends React.Component {
         viewCsys.scene.add(viewCubeEdges);
         presentation.update();
 
-        viewCsys.controls.noZoom = (viewCsys.controls.noRotate = (viewCsys.controls.noPan = true));
+        viewCsys.controls.noZoom = viewCsys.controls.noRotate = viewCsys.controls.noPan = true;
         viewSession.callbackAfter = () => {
             var src = viewSession.camera;
             var dst = viewCsys.camera;
