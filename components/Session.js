@@ -44,17 +44,21 @@ export default class Session extends React.PureComponent {
 
     constructor(props) {
         super();
-        this.session = new Session(this.props);
+        this.interface = new Session(this.props);
     }
 
     getChildContext() {
-        return { session: this.session };
+        return { session: this.interface };
+    }
+
+    getInterface() {
+        return this.interface;
     }
 
     componentDidMount() {
         // Get view and add the sessions pool into its scene
         this.view = this.refs.view.getInterface();
-        this.view.scene.add(this.session.pool);
+        this.view.scene.add(this.interface.pool);
     }
 
     componentWillUnmount() {
