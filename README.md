@@ -10,11 +10,12 @@ class Test extends React.Component {
     componentDidMount() {
         // Link view
         this.view = this.refs.view.getInterface()
-        // Add geometry
+        // Create geometry
         const box = new THREE.Mesh(
             new THREE.BoxBufferGeometry(100, 100, 100),
             new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.5, color: new THREE.Color('green') })
         )
+        // Add geometry to scene
         this.view.scene.add(box)
         this.view.updateBounds().controls.focus().zoom()
     }
@@ -47,25 +48,28 @@ The Session component takes all options that work with the generic awv3-Session.
 It has a number of defaults that will create a standard session with a Csys attached, loading a default environment map. It will also create a Redux store-Provider if the store option has been left empty (which means awv3-Session will construct its own store). All direct and nested children will inherit the "session" context. If "store" is passed explicitly no Provider will be created.
 
 ```js
+import React from 'react'
+import { Session } from 'awv3-react'
+import { actions as connectionActions } from 'awv3/session/store/connections'
+
 class Test extends React.Component {
     componentDidMount() {
         // Get awv3-session
-        let session = this.refs.session.getInterface();
+        let session = this.refs.session.getInterface()
         // Add new connection, wait until it's connected
         session.addConnection('new-tab').on('connected', async connection => {
             // Execute command
-            await connection.execute(`
-                CADH_SetVertexFilter(TRUE);
-                _C.GraphicFileLoader.LoadFile("/usr/default/models/test.of1");
-                _C.GlobaleFunktionen.UseOnStartRecalc(_O);`);
+            await session.store.dispatch(
+                connectionActions.load(connection.id, '/usr/default/models/test.of1')
+            )
             // Adjust camera controls
-            connection.pool.view.updateBounds().controls.focus().zoom();
+            connection.pool.view.updateBounds().controls.focus().zoom()
         });
     }
 
     handleOpenFile = event =>
         // Forward open-file event to the Session components own implementation
-        this.refs.session.openFile(event);
+        this.refs.session.openFile(event)
 
     render() {
         return (
@@ -74,7 +78,7 @@ class Test extends React.Component {
                 url="http://localhost:8181/">
                 <input type="file" onChange={this.handleOpenFile} />
             </Session>
-        );
+        )
     }
 }
 
