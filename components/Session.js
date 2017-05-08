@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import React from 'react';
+import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 import CubeTexture from 'awv3/three/cubetexture';
 import pool from 'awv3/misc/presentation';
@@ -67,7 +68,36 @@ export default class Session extends React.PureComponent {
 
     doubleClick = event => this.view.updateBounds().controls.focus().zoom();
 
+    openFile = event => {
+        let file = event.target.files[0];
+        if (file) {
+            let name = file.name.substr(0, file.name.lastIndexOf('.'));
+            var reader = new FileReader();
+            reader.onload = event => {
+                let data = pack(event.target.result);
+                let connection = this.interface.addConnection(file.name);
+                connection.on('connected', async () => {
+                    await this.props.load(connection.id, data);
+                    connection.pool.view.updateBounds().controls.focus().zoom().rotate(0, Math.PI / 2);
+                });
+            };
+            reader.readAsArrayBuffer(file);
+        }
+    };
+
     render() {
+        if (this.props.store)
+            return this.renderCanvas();
+        else {
+            return (
+                <Provider store={session.store}>
+                    {this.renderCanvas()}
+                </Provider>
+            )
+        }
+    }
+
+    renderCanvas() {
         return (
             <div className={this.props.className} style={this.props.style}>
                 <Canvas
