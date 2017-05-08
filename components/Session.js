@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import React from 'react';
 import PropTypes from 'prop-types';
 import pool from 'awv3/misc/presentation';
