@@ -65,23 +65,26 @@ export default class Session extends React.PureComponent {
 
     render() {
         return (
-            <Canvas
-                style={{ position: 'absolute', top: 0, left: 0, ...this.props.style }}
-                resolution={this.props.resolution}
-                onDoubleClick={this.doubleClick}>
-                <View ref="view" up={this.props.up} stats={this.props.stats}>
-                    <Csys
-                        style={{
-                            position: 'absolute',
-                            bottom: 0,
-                            left: 14,
-                            width: 90,
-                            height: 90,
-                            ...this.props.csysStyle,
-                        }}
-                    />
-                </View>
-            </Canvas>
+            <div className={this.props.className} style={this.props.style}>
+                <Canvas
+                    style={{ position: 'absolute', top: 0, left: 0, ...this.props.canvasStyle }}
+                    resolution={this.props.resolution}
+                    onDoubleClick={this.doubleClick}>
+                    <View ref="view" up={this.props.up} stats={this.props.stats}>
+                        <Csys
+                            style={{
+                                position: 'absolute',
+                                bottom: 0,
+                                left: 14,
+                                width: 90,
+                                height: 90,
+                                ...this.props.csysStyle,
+                            }}
+                        />
+                    </View>
+                </Canvas>
+                {this.props.children}
+            </div>
         );
     }
 }
