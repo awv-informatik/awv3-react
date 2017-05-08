@@ -52,7 +52,7 @@ It has a number of defaults that will create a standard session with a Csys atta
 
 # API
 
-## Session
+**Session**
 
 ```js
 static propTypes = {
@@ -89,14 +89,14 @@ static defaultProps = {
 static childContextTypes = { session: PropTypes.object };
 ```
 
-## Canvas
+**Canvas**
 
 ```js
 static propTypes = { resolution: PropTypes.number };
 static childContextTypes = { canvas: PropTypes.object };
 ```
 
-## View
+**View**
 
 ```js
 static propTypes = { up: PropTypes.array, stats: PropTypes.bool };
