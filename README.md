@@ -42,11 +42,11 @@ ReactDOM.render(<Test />, document.querySelector('#app'))
 
 The Session component takes all options that work with the generic awv3-Session.
 
-It has a number of defaults that will create a standard session with a Csys attached, loading a default environment map.
+It has a number of defaults that will create a standard session with a Csys attached, loading a default environment map. It will also create a Redux store-Provider if the store option has been left empty (which means awv3-Session will construct its own store). All direct and nested children will inherit the "session" context. If "store" is passed explicitly no Provider will be created. 
 
 ```js
 <Session url="http://localhost:8181/" materials={materials} resources={resources}>
-    {/* All children inherit the "session" context */}
+    {/* children */}
 </Session>
 ```
 
