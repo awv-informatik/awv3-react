@@ -14,8 +14,8 @@ import Csys from './Csys';
 export default class Session extends React.PureComponent {
     static propTypes = {
         debug: PropTypes.bool,
-        pool: PropTypes.object,
-        protocol: PropTypes.object,
+        pool: PropTypes.function,
+        protocol: PropTypes.function,
         url: PropTypes.string,
         materials: PropTypes.object,
         resources: PropTypes.object,
