@@ -100,6 +100,6 @@ static childContextTypes = { canvas: PropTypes.object };
 
 ```js
 static propTypes = { up: PropTypes.array, stats: PropTypes.bool };
-static defaultProps = { up: [0, 0, 1], stats: false };
+static defaultProps = { up: [0, 1, 0], stats: false };
 static childContextTypes = { view: PropTypes.object };
 ```

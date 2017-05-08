@@ -6,7 +6,7 @@ import { View as ViewImpl } from 'awv3';
 export default class View extends React.PureComponent {
     state = { ready: false };
     static propTypes = { up: PropTypes.array, stats: PropTypes.bool };
-    static defaultProps = { up: [0, 0, 1], stats: false };
+    static defaultProps = { up: [0, 1, 0], stats: false };
     static contextTypes = { canvas: PropTypes.object };
     static childContextTypes = { view: PropTypes.object };
     getChildContext = () => ({ view: this.interface });
