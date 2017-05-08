@@ -42,7 +42,7 @@ ReactDOM.render(<Test />, document.querySelector('#app'))
 
 The Session component takes all options that work with the generic awv3-Session.
 
-It has a number of defaults that will create a standard session with a Csys attached, loading a default environment map. It will also create a Redux store-Provider if the store option has been left empty (which means awv3-Session will construct its own store). All direct and nested children will inherit the "session" context. If "store" is passed explicitly no Provider will be created. 
+It has a number of defaults that will create a standard session with a Csys attached, loading a default environment map. It will also create a Redux store-Provider if the store option has been left empty (which means awv3-Session will construct its own store). All direct and nested children will inherit the "session" context. If "store" is passed explicitly no Provider will be created.
 
 ```js
 <Session url="http://localhost:8181/" materials={materials} resources={resources}>
@@ -50,7 +50,9 @@ It has a number of defaults that will create a standard session with a Csys atta
 </Session>
 ```
 
-The whole API is defined as such:
+# API
+
+## Session
 
 ```js
 static propTypes = {
@@ -85,4 +87,19 @@ static defaultProps = {
     stats: false,
 };
 static childContextTypes = { session: PropTypes.object };
+```
+
+## Canvas
+
+```js
+static propTypes = { resolution: PropTypes.number };
+static childContextTypes = { canvas: PropTypes.object };
+```
+
+## View
+
+```js
+static propTypes = { up: PropTypes.array, stats: PropTypes.bool };
+static defaultProps = { up: [0, 0, 1], stats: false };
+static childContextTypes = { view: PropTypes.object };
 ```
