@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import React from 'react';
 import PropTypes from 'prop-types';
+import CubeTexture from 'awv3/three/cubetexture';
 import pool from 'awv3/misc/presentation';
 import protocol from 'awv3/communication/socketio';
 import Canvas from './Canvas';
@@ -29,7 +30,9 @@ export default class Session extends React.PureComponent {
             lazy: false,
             edgeColor: new THREE.Color(0),
             edgeOpacity: 0.4,
-            envMap,
+            envMap: new CubeTexture(['px', 'nx', 'py', 'ny', 'pz', 'nz'], n =>
+                require('../assets/env/' + n + '.jpg'),
+            ),
         },
         resources: undefined,
         store: undefined,
