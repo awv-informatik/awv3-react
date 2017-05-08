@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import CubeTexture from 'awv3/three/cubetexture';
 import pool from 'awv3/misc/presentation';
 import protocol from 'awv3/communication/socketio';
+import SessionImpl from 'awv3/session';
 import { actions as connectionActions } from 'awv3/session/store/connections';
 import { pack } from 'awv3/session/helpers';
 import Canvas from './Canvas';
@@ -14,8 +15,8 @@ import Csys from './Csys';
 export default class Session extends React.PureComponent {
     static propTypes = {
         debug: PropTypes.bool,
-        pool: PropTypes.function,
-        protocol: PropTypes.function,
+        pool: PropTypes.func,
+        protocol: PropTypes.func,
         url: PropTypes.string,
         materials: PropTypes.object,
         resources: PropTypes.object,
@@ -47,7 +48,7 @@ export default class Session extends React.PureComponent {
 
     constructor(props) {
         super();
-        this.interface = new Session(this.props);
+        this.interface = window.session = new SessionImpl(props);
     }
 
     getChildContext() {
@@ -77,10 +78,10 @@ export default class Session extends React.PureComponent {
             var reader = new FileReader();
             reader.onload = event => {
                 let data = pack(event.target.result);
-                let connection = this.interface.store.dispatch(connectionActions.addConnection(file.name));
+                let connection = this.interface.addConnection(file.name);
                 connection.on('connected', async () => {
-                    await this.interface.store.dispatch(connectionActions.load(connection.id, data));
-                    connection.pool.view.updateBounds().controls.focus().zoom().rotate(0, Math.PI / 2);
+                    let e = await this.interface.store.dispatch(connectionActions.load(connection.id, data));
+                    connection.pool.view.updateBounds().controls.focus().zoom().rotate(Math.PI, Math.PI / 2);
                 });
             };
             reader.readAsArrayBuffer(file);
@@ -92,7 +93,7 @@ export default class Session extends React.PureComponent {
             return this.renderCanvas();
         else {
             return (
-                <Provider store={session.store}>
+                <Provider store={this.interface.store}>
                     {this.renderCanvas()}
                 </Provider>
             )
