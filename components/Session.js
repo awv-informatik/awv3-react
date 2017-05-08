@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import CubeTexture from 'awv3/three/cubetexture';
 import pool from 'awv3/misc/presentation';
 import protocol from 'awv3/communication/socketio';
+import { actions as connectionActions } from 'awv3/session/store/connections';
+import { pack } from 'awv3/session/helpers';
 import Canvas from './Canvas';
 import View from './View';
 import Csys from './Csys';
@@ -75,9 +77,9 @@ export default class Session extends React.PureComponent {
             var reader = new FileReader();
             reader.onload = event => {
                 let data = pack(event.target.result);
-                let connection = this.interface.addConnection(file.name);
+                let connection = this.interface.store.dispatch(connectionActions.addConnection(file.name));
                 connection.on('connected', async () => {
-                    await this.props.load(connection.id, data);
+                    await this.interface.store.dispatch(connectionActions.load(connection.id, data));
                     connection.pool.view.updateBounds().controls.focus().zoom().rotate(0, Math.PI / 2);
                 });
             };
