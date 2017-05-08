@@ -1,4 +1,6 @@
-# Using Canvas, View and a Csys
+    npm install awv3-react
+
+# Example using Canvas, View and a Csys
 
 ```js
 import React from 'react'
@@ -38,7 +40,7 @@ class Test extends React.Component {
 ReactDOM.render(<Test />, document.querySelector('#app'))
 ```
 
-# Using Session
+# Example using Session
 
 The Session component takes all options that work with the generic awv3-Session.
 
