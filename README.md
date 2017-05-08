@@ -49,3 +49,40 @@ It has a number of defaults that will create a standard session with a Csys atta
     {/* All children inherit the "session" context */}
 </Session>
 ```
+
+The whole API is defined as such:
+
+```js
+static propTypes = {
+    debug: PropTypes.bool,
+    pool: PropTypes.func,
+    protocol: PropTypes.func,
+    url: PropTypes.string,
+    materials: PropTypes.object,
+    resources: PropTypes.object,
+    store: PropTypes.object,
+    resolution: PropTypes.number,
+    up: PropTypes.array,
+    stats: PropTypes.bool,
+};
+static defaultProps = {
+    debug: false,
+    pool,
+    protocol,
+    url: 'http://localhost:8181/',
+    materials: {
+        lazy: false,
+        edgeColor: new THREE.Color(0),
+        edgeOpacity: 0.4,
+        envMap: new CubeTexture(['px', 'nx', 'py', 'ny', 'pz', 'nz'], n =>
+            require('../assets/env/' + n + '.jpg'),
+        ),
+    },
+    resources: undefined,
+    store: undefined,
+    resolution: 1,
+    up: [0, 1, 0],
+    stats: false,
+};
+static childContextTypes = { session: PropTypes.object };
+```
