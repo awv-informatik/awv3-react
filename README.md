@@ -1,3 +1,5 @@
+# Using Canvas, View and a Csys
+
 ```js
 import React from 'react'
 import { Canvas, View, Csys } from 'awv3-react'
@@ -34,4 +36,16 @@ class Test extends React.Component {
 }
 
 ReactDOM.render(<Test />, document.querySelector('#app'))
+```
+
+# Using Session
+
+The Session component takes all options that work with the generic awv3-Session.
+
+It has a number of defaults that will create a standard session with a Csys attached, loading a default environment map.
+
+```js
+<Session url="http://localhost:8181/" materials={materials} resources={resources}>
+    {/* All children inherit the "session" context */}
+</Session>
 ```
