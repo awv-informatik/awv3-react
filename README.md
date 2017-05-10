@@ -1,3 +1,5 @@
+Ready-made React awv3 components.
+
     npm install awv3-react
 
 # Example using Canvas, View and a Csys
