@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Canvas as CanvasImpl } from 'awv3/core/canvas';
+import CanvasImpl from 'awv3/core/canvas';
 
 export default class Canvas extends React.PureComponent {
     static propTypes = { resolution: PropTypes.number };
