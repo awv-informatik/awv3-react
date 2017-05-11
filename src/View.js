@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View as ViewImpl } from 'awv3';
+import { View as ViewImpl } from 'awv3/core/view';
 
 export default class View extends React.PureComponent {
     state = { ready: false };
