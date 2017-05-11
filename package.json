@@ -1,6 +1,6 @@
 {
   "name": "awv3-react",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "awv3": "^7.0.58",
-    "awv3-protocol": "^1.0.1",
+    "awv3-protocol": "^1.0.2",
     "babel-cli": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",

@@ -101,9 +101,9 @@ awv3-icons@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/awv3-icons/-/awv3-icons-1.0.0.tgz#5545e5f62b35bf6e0e0d08507651e7b2dcd67461"
 
-awv3-protocol@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/awv3-protocol/-/awv3-protocol-1.0.1.tgz#84567be1b13636b4ad62650e41c1471a13083149"
+awv3-protocol@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/awv3-protocol/-/awv3-protocol-1.0.2.tgz#c3bf7eb9c5d61b529285a84b9c9a3b422098bd5d"
   dependencies:
     uuid-v4 "^0.1.0"
 
@@ -998,15 +998,9 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-debug@2.6.4:
+debug@2.6.4, debug@^2.1.1, debug@^2.2.0, debug@~2.6.4:
   version "2.6.4"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.4.tgz#7586a9b3c39741c0282ae33445c4e8ac74734fe0"
-  dependencies:
-    ms "0.7.3"
-
-debug@^2.1.1, debug@^2.2.0, debug@~2.6.4:
-  version "2.6.6"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.6.tgz#a9fa6fbe9ca43cf1e79f73b75c0189cbb7d6db5a"
   dependencies:
     ms "0.7.3"
 
@@ -1724,13 +1718,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.0.0, prop-types@^15.5.7, prop-types@~15.5.7:
-  version "15.5.8"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.8.tgz#6b7b2e141083be38c8595aa51fc55775c7199394"
-  dependencies:
-    fbjs "^0.8.9"
-
-prop-types@^15.5.9:
+prop-types@^15.0.0, prop-types@^15.5.7, prop-types@^15.5.9, prop-types@~15.5.7:
   version "15.5.9"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.9.tgz#d478eef0e761396942f70c78e772f76e8be747c9"
   dependencies:
