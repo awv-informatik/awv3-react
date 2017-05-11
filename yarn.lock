@@ -101,9 +101,9 @@ awv3-icons@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/awv3-icons/-/awv3-icons-1.0.0.tgz#5545e5f62b35bf6e0e0d08507651e7b2dcd67461"
 
-awv3-protocol@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/awv3-protocol/-/awv3-protocol-1.0.2.tgz#c3bf7eb9c5d61b529285a84b9c9a3b422098bd5d"
+awv3-protocol@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/awv3-protocol/-/awv3-protocol-1.0.4.tgz#fbd6952647dc35b1d4fb4c9963da178399a4f19c"
   dependencies:
     uuid-v4 "^0.1.0"
 
