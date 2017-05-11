@@ -34,9 +34,7 @@ export default class Session extends React.PureComponent {
             lazy: false,
             edgeColor: new THREE.Color(0),
             edgeOpacity: 0.4,
-            envMap: new CubeTexture(['px', 'nx', 'py', 'ny', 'pz', 'nz'], n =>
-                require('../assets/env/' + n + '.jpg'),
-            ),
+            envMap: new CubeTexture(['px', 'nx', 'py', 'ny', 'pz', 'nz'], n => require('../assets/env/' + n + '.jpg')),
         },
         resources: undefined,
         store: undefined,
@@ -79,9 +77,12 @@ export default class Session extends React.PureComponent {
             reader.onload = event => {
                 let data = pack(event.target.result);
                 let connection = this.interface.addConnection(file.name);
-                connection.on('connected', async () => {
-                    let e = await this.interface.store.dispatch(connectionActions.load(connection.id, data));
-                    connection.pool.view.updateBounds().controls.focus().zoom().rotate(Math.PI, Math.PI / 2);
+                connection.on('connected', () => {
+                    this.interface.store
+                        .dispatch(connectionActions.load(connection.id, data))
+                        .then(() =>
+                            connection.pool.view.updateBounds().controls.focus().zoom().rotate(Math.PI, Math.PI / 2),
+                        );
                 });
             };
             reader.readAsArrayBuffer(file);
@@ -89,14 +90,13 @@ export default class Session extends React.PureComponent {
     };
 
     render() {
-        if (this.props.store)
-            return this.renderCanvas();
+        if (this.props.store) return this.renderCanvas();
         else {
             return (
                 <Provider store={this.interface.store}>
                     {this.renderCanvas()}
                 </Provider>
-            )
+            );
         }
     }
 
