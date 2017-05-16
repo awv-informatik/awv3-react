@@ -1,6 +1,6 @@
 {
   "name": "awv3-react",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
@@ -18,10 +18,10 @@
   },
   "homepage": "https://github.com/awv-informatik/awv3-react#readme",
   "dependencies": {
-    "prop-types": "^15.5.9"
+    "prop-types": "^15.5.10"
   },
   "devDependencies": {
-    "awv3": "^7.0.58",
+    "awv3": "^7.0.62",
     "awv3-protocol": "^1.0.4",
     "babel-cli": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
