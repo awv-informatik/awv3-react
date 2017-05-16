@@ -31,7 +31,7 @@ class Test extends React.Component {
                 resolution={1}
                 onDoubleClick={this.onDoubleClick}>
                 <View ref="view" up={[0, 1, 0]}>
-                    <Csys style={{ position: 'absolute', bottom: 0, left: 14, width: 90, height: 90 }} />
+                    <Csys style={{ position: 'absolute', bottom: 0, width: 90, height: 90 }} />
                 </View>
             </Canvas>
         )
