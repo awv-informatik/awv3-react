@@ -13,7 +13,7 @@ class Test extends React.Component {
         // Create geometry
         const box = new THREE.Mesh(
             new THREE.BoxBufferGeometry(100, 100, 100),
-            new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.5, color: new THREE.Color('green') })
+            new THREE.MeshBasicMaterial({ color: new THREE.Color('red') })
         )
         // Add geometry to scene
         this.view.scene.add(box)
