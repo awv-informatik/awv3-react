@@ -27,9 +27,9 @@ export default class Session extends React.PureComponent {
         stats: PropTypes.bool,
         updateView: PropTypes.object,
         renderOrder: PropTypes.object,
-        lineShader: PropTypes.function,
+        lineShader: PropTypes.func,
         lineShaderOptions: PropTypes.object,
-        meshShader: PropTypes.function,
+        meshShader: PropTypes.func,
         meshShaderOptions: PropTypes.object,
     };
     static defaultProps = {
