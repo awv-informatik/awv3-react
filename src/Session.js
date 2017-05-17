@@ -27,9 +27,9 @@ export default class Session extends React.PureComponent {
         stats: PropTypes.bool,
         updateView: PropTypes.object,
         renderOrder: PropTypes.object,
-        lineShader: PropTypes.object,
+        lineShader: PropTypes.function,
         lineShaderOptions: PropTypes.object,
-        meshShader: PropTypes.object,
+        meshShader: PropTypes.function,
         meshShaderOptions: PropTypes.object,
     };
     static defaultProps = {
@@ -45,9 +45,9 @@ export default class Session extends React.PureComponent {
         stats: Defaults.stats,
         updateView: Defaults.updateView,
         renderOrder: Defaults.renderOrder,
-        lineShader: Defaults.lineShader,
-        lineShaderOptions: Defaults.lineShaderOptions,
-        meshShader: Defaults.meshShader,
+        lineShader: undefined,
+        lineShaderOptions: undefined,
+        meshShader: undefined,
         meshShaderOptions: {
             envMap: new CubeTexture(['px', 'nx', 'py', 'ny', 'pz', 'nz'], n => require('../assets/env/' + n + '.jpg')),
             ...Defaults.meshShaderOptions,
