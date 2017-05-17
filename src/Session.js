@@ -25,6 +25,12 @@ export default class Session extends React.PureComponent {
         resolution: PropTypes.number,
         up: PropTypes.array,
         stats: PropTypes.bool,
+        updateView: PropTypes.object,
+        renderOrder: PropTypes.object,
+        lineShader: PropTypes.object,
+        lineShaderOptions: PropTypes.object,
+        meshShader: PropTypes.object,
+        meshShaderOptions: PropTypes.object,
     };
     static defaultProps = {
         debug: Defaults.debug,
@@ -40,6 +46,12 @@ export default class Session extends React.PureComponent {
         resolution: Defaults.resolution,
         up: Defaults.up,
         stats: Defaults.stats,
+        updateView: Defaults.updateView,
+        renderOrder: Defaults.renderOrder,
+        lineShader: Defaults.lineShader,
+        lineShaderOptions: Defaults.lineShaderOptions,
+        meshShader: Defaults.meshShader,
+        meshShaderOptions: Defaults.meshShaderOptions,
     };
     static childContextTypes = { session: PropTypes.object };
 
