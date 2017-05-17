@@ -37,10 +37,7 @@ export default class Session extends React.PureComponent {
         pool,
         protocol,
         url: 'http://localhost:8181/',
-        materials: {
-            ...Defaults.materials,
-            envMap: new CubeTexture(['px', 'nx', 'py', 'ny', 'pz', 'nz'], n => require('../assets/env/' + n + '.jpg')),
-        },
+        materials: Defaults.materials,
         resources: undefined,
         store: undefined,
         resolution: Defaults.resolution,
@@ -51,7 +48,10 @@ export default class Session extends React.PureComponent {
         lineShader: Defaults.lineShader,
         lineShaderOptions: Defaults.lineShaderOptions,
         meshShader: Defaults.meshShader,
-        meshShaderOptions: Defaults.meshShaderOptions,
+        meshShaderOptions: {
+            envMap: new CubeTexture(['px', 'nx', 'py', 'ny', 'pz', 'nz'], n => require('../assets/env/' + n + '.jpg')),
+            ...Defaults.meshShaderOptions,
+        },
     };
     static childContextTypes = { session: PropTypes.object };
 
