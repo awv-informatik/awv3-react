@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import React from 'react';
 import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
+import Defaults from 'awv3/core/defaults';
 import CubeTexture from 'awv3/three/cubetexture';
 import pool from 'awv3/misc/presentation';
 import protocol from 'awv3/communication/socketio';
@@ -26,21 +27,19 @@ export default class Session extends React.PureComponent {
         stats: PropTypes.bool,
     };
     static defaultProps = {
-        debug: false,
+        debug: Defaults.debug,
         pool,
         protocol,
         url: 'http://localhost:8181/',
         materials: {
-            lazy: false,
-            edgeColor: new THREE.Color(0),
-            edgeOpacity: 0.4,
+            ...Defaults.materials,
             envMap: new CubeTexture(['px', 'nx', 'py', 'ny', 'pz', 'nz'], n => require('../assets/env/' + n + '.jpg')),
         },
         resources: undefined,
         store: undefined,
-        resolution: 1,
-        up: [0, 1, 0],
-        stats: false,
+        resolution: Defaults.resolution,
+        up: Defaults.up,
+        stats: Defaults.stats,
     };
     static childContextTypes = { session: PropTypes.object };
 

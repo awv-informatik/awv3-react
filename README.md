@@ -108,18 +108,16 @@ static defaultProps = {
     protocol,
     url: 'http://localhost:8181/',
     materials: {
-        lazy: false,
-        edgeColor: new THREE.Color(0),
-        edgeOpacity: 0.4,
+        ...Defaults.materials,
         envMap: new CubeTexture(['px', 'nx', 'py', 'ny', 'pz', 'nz'], n =>
             require('../assets/env/' + n + '.jpg'),
         ),
     },
     resources: undefined,
     store: undefined,
-    resolution: 1,
-    up: [0, 1, 0],
-    stats: false,
+    resolution: Defaults.resolution,
+    up: Defaults.up,
+    stats: Defaults.stats,
 };
 static childContextTypes = { session: PropTypes.object };
 ```
@@ -134,7 +132,7 @@ static childContextTypes = { canvas: PropTypes.object };
 **View**
 
 ```js
-static propTypes = { up: PropTypes.array, stats: PropTypes.bool };
-static defaultProps = { up: [0, 1, 0], stats: false };
+static propTypes = { up: PropTypes.array, stats: PropTypes.bool, ambientIntensity: PropTypes.number };
+static defaultProps = { up: Defaults.up, stats: Defaults.stats, ambientIntensity: Defaults.ambientIntensity };
 static childContextTypes = { view: PropTypes.object };
 ```
