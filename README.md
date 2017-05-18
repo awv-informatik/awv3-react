@@ -114,19 +114,14 @@ static defaultProps = {
     protocol,
     url: 'http://localhost:8181/',
     materials: Defaults.materials,
-    resources: undefined,
-    store: undefined,
     resolution: Defaults.resolution,
     up: Defaults.up,
     stats: Defaults.stats,
     updateView: Defaults.updateView,
     renderOrder: Defaults.renderOrder,
-    lineShader: undefined,
-    lineShaderOptions: undefined,
-    meshShader: undefined,
     meshShaderOptions: {
         envMap: new CubeTexture(['px', 'nx', 'py', 'ny', 'pz', 'nz'], n => require('../assets/env/' + n + '.jpg')),
-        ...Defaults.meshShaderOptions,
+        ...Defaults.meshShaderPrimeOptions,
     },
 };
 static childContextTypes = { session: PropTypes.object };
