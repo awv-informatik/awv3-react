@@ -119,9 +119,10 @@ static defaultProps = {
     stats: Defaults.stats,
     updateView: Defaults.updateView,
     renderOrder: Defaults.renderOrder,
+    meshShader: Defaults.meshShader,
     meshShaderOptions: {
-        envMap: new CubeTexture(['px', 'nx', 'py', 'ny', 'pz', 'nz'], n => require('../assets/env/' + n + '.jpg')),
-        ...Defaults.meshShaderPrimeOptions,
+        ...Defaults.meshShaderOptions,
+        envMap: new CubeTexture(['px', 'nx', 'py', 'ny', 'pz', 'nz'], n => require('../assets/env/' + n + '.png')),
     },
 };
 static childContextTypes = { session: PropTypes.object };

@@ -97,15 +97,9 @@ aws4@^1.2.1:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
 
-awv3-icons@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/awv3-icons/-/awv3-icons-1.0.0.tgz#5545e5f62b35bf6e0e0d08507651e7b2dcd67461"
-
-awv3-protocol@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/awv3-protocol/-/awv3-protocol-1.0.4.tgz#fbd6952647dc35b1d4fb4c9963da178399a4f19c"
-  dependencies:
-    uuid-v4 "^0.1.0"
+awv3-icons@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/awv3-icons/-/awv3-icons-1.0.1.tgz#8c9a5e4b3e46c8fd5c14a315d06dd71ac32a8e05"
 
 awv3-protocol@^1.0.5:
   version "1.0.5"
@@ -113,12 +107,12 @@ awv3-protocol@^1.0.5:
   dependencies:
     uuid-v4 "^0.1.0"
 
-awv3@^7.0.62:
-  version "7.0.62"
-  resolved "https://registry.yarnpkg.com/awv3/-/awv3-7.0.62.tgz#5308c698ff26aa6f4ad96a7da5e7d7d2ec5a84f9"
+awv3@^7.0.71:
+  version "7.0.71"
+  resolved "https://registry.yarnpkg.com/awv3/-/awv3-7.0.71.tgz#24739d863ef45814263e1c83e7a35572e5349445"
   dependencies:
-    awv3-icons "^1.0.0"
-    awv3-protocol "^1.0.4"
+    awv3-icons "^1.0.1"
+    awv3-protocol "^1.0.5"
     babel-runtime "^6.23.0"
     base64-arraybuffer "^0.1.5"
     delay "^2.0.0"
@@ -986,11 +980,12 @@ core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
 
-create-react-class@^15.5.1:
-  version "15.5.2"
-  resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.5.2.tgz#6a8758348df660b88326a0e764d569f274aad681"
+create-react-class@^15.5.3:
+  version "15.5.3"
+  resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.5.3.tgz#fb0f7cae79339e9a179e194ef466efa3923820fe"
   dependencies:
     fbjs "^0.8.9"
+    loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
 cryptiles@2.x.x:
@@ -1725,7 +1720,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.0.0, prop-types@^15.5.10, prop-types@^15.5.7, prop-types@~15.5.7:
+prop-types@^15.5.10, prop-types@^15.5.7, prop-types@~15.5.7:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
@@ -1765,17 +1760,17 @@ react-dom@^15.5.4:
     object-assign "^4.1.0"
     prop-types "~15.5.7"
 
-react-redux@^5.0.4:
-  version "5.0.4"
-  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.4.tgz#1563babadcfb2672f57f9ceaa439fb16bf85d55b"
+react-redux@^5.0.5:
+  version "5.0.5"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.5.tgz#f8e8c7b239422576e52d6b7db06439469be9846a"
   dependencies:
-    create-react-class "^15.5.1"
+    create-react-class "^15.5.3"
     hoist-non-react-statics "^1.0.3"
     invariant "^2.0.0"
     lodash "^4.2.0"
     lodash-es "^4.2.0"
     loose-envify "^1.1.0"
-    prop-types "^15.0.0"
+    prop-types "^15.5.10"
 
 react@^15.5.4:
   version "15.5.4"
