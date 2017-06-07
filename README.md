@@ -112,7 +112,7 @@ static defaultProps = {
     debug: Defaults.debug,
     pool,
     protocol,
-    url: 'http://localhost:8181/',
+    url: 'http://localhost:8181',
     materials: Defaults.materials,
     resolution: Defaults.resolution,
     up: Defaults.up,

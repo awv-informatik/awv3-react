@@ -8,7 +8,7 @@ import pool from 'awv3/misc/presentation';
 import protocol from 'awv3/communication/socketio';
 import SessionImpl from 'awv3/session';
 import { actions as connectionActions } from 'awv3/session/store/connections';
-import { pack } from 'awv3-protocol/pack';
+import pack from 'awv3-protocol/pack';
 import Canvas from './Canvas';
 import View from './View';
 import Csys from './Csys';
@@ -36,7 +36,7 @@ export default class Session extends React.PureComponent {
         debug: Defaults.debug,
         pool,
         protocol,
-        url: 'http://localhost:8181/',
+        url: 'http://localhost:8181',
         materials: Defaults.materials,
         resolution: Defaults.resolution,
         up: Defaults.up,
