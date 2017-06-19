@@ -17,7 +17,7 @@ export default class View extends React.PureComponent {
     }
     componentDidMount() {
         this.interface = new ViewImpl(this.context.canvas, {
-            dom: this.refs.view,
+            dom: this.ref,
             up: new THREE.Vector3().fromArray(this.props.up),
             ambientIntensity: this.props.ambientIntensity,
             stats: this.props.stats,
@@ -33,7 +33,7 @@ export default class View extends React.PureComponent {
     render() {
         return (
             <div
-                ref="view"
+                ref={ref => this.ref = ref}
                 style={{
                     position: 'absolute',
                     height: '100%',

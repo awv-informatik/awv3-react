@@ -10,7 +10,7 @@ export default class Csys extends React.Component {
     static contextTypes = { session: PropTypes.object, view: PropTypes.object };
     componentDidMount() {
         const viewSession = this.context.view;
-        const viewCsys = this.refs.view.getInterface();
+        const viewCsys = this.ref.getInterface();
         const radius = 15;
         const chamfer = 0.4;
         const viewCubeFaces = new THREE.Object3D();
@@ -168,7 +168,7 @@ export default class Csys extends React.Component {
     render() {
         return (
             <Canvas style={this.props.style} resolution={2}>
-                <View ref="view" up={this.context.view.camera.up.toArray()} />
+                <View ref={ref => this.ref = ref} up={this.context.view.camera.up.toArray()} />
             </Canvas>
         );
     }

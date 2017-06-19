@@ -66,7 +66,7 @@ export default class Session extends React.PureComponent {
 
     componentDidMount() {
         // Get view and add the sessions pool into its scene
-        this.view = this.refs.view.getInterface();
+        this.view = this.ref.getInterface();
         this.view.scene.add(this.interface.pool);
     }
 
@@ -114,7 +114,7 @@ export default class Session extends React.PureComponent {
                     style={{ position: 'absolute', top: 0, left: 0, ...this.props.canvasStyle }}
                     resolution={this.props.resolution}
                     onDoubleClick={this.doubleClick}>
-                    <View ref="view" up={this.props.up} stats={this.props.stats}>
+                    <View ref={ref => this.ref = ref} up={this.props.up} stats={this.props.stats}>
                         <Csys
                             style={{
                                 position: 'absolute',

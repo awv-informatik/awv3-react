@@ -24,7 +24,7 @@ export default class Canvas extends React.PureComponent {
 
     componentDidMount() {
         this.interface.dom.style.position = 'absolute';
-        this.refs.canvas.insertBefore(this.interface.dom, this.refs.canvas.firstChild);
+        this.ref.insertBefore(this.interface.dom, this.ref.firstChild);
         setTimeout(() => this.interface.renderer.resize(), 200);
     }
 
@@ -37,7 +37,7 @@ export default class Canvas extends React.PureComponent {
     render() {
         return (
             <div
-                ref="canvas"
+                ref={ref => this.ref = ref}
                 className={this.props.className}
                 onDoubleClick={this.props.onDoubleClick}
                 onContextMenu={this.onContextMenu}
