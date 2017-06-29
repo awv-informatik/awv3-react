@@ -120,8 +120,8 @@ export default class Session extends React.PureComponent {
                                 position: 'absolute',
                                 bottom: 0,
                                 left: 14,
-                                width: 90,
-                                height: 90,
+                                width: 85,
+                                height: 85,
                                 ...this.props.csysStyle,
                             }}
                         />
