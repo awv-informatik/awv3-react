@@ -118,10 +118,10 @@ export default class Session extends React.PureComponent {
                         <Csys
                             style={{
                                 position: 'absolute',
-                                bottom: 0,
-                                left: 14,
-                                width: 85,
-                                height: 85,
+                                bottom: 6,
+                                left: 6,
+                                width: 80,
+                                height: 80,
                                 ...this.props.csysStyle,
                             }}
                         />
