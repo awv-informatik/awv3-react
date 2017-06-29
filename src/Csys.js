@@ -8,6 +8,9 @@ import Presentation from 'awv3/misc/presentation'
 
 export default class Csys extends React.Component {
     static contextTypes = { session: PropTypes.object, view: PropTypes.object, shadow: PropTypes.bool }
+    componentWillUnmount() {
+        this.unsub()
+    }
     componentDidMount() {
         const viewSession = this.context.view
         const viewCsys = this.ref.getInterface()
@@ -152,6 +155,20 @@ export default class Csys extends React.Component {
         target.add(viewCubeFaces)
         target.add(viewCubeEdges)
         target.update && target.update()
+
+        this.unsub = this.context.session.observe(
+            state => state.globals.day,
+            day => {
+                target.traverse(object =>
+                    object.material && object.type === 'Mesh' && object
+                        .animate(
+                            object.mapMaterial(material => ({ color: new THREE.Color(day ? 0xffffff : 0x5b5b5b) })),
+                        )
+                        .start(1000),
+                )
+            },
+            { fireOnStart: true }
+        )
 
         viewCsys.controls.noZoom = viewCsys.controls.noRotate = viewCsys.controls.noPan = true
         viewSession.callbackAfter = () => {
