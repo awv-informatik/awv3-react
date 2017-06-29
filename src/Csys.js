@@ -169,7 +169,7 @@ export default class Csys extends React.Component {
     }
     render() {
         return (
-            <Canvas style={this.props.style} resolution={2}>
+            <Canvas style={this.props.style} resolution={2} className="csys">
                 <View ref={ref => (this.ref = ref)} up={this.context.view.camera.up.toArray()} />
             </Canvas>
         )
