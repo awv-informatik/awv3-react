@@ -21,9 +21,10 @@ export default class Csys extends React.Component {
         for (texName of ['mzz', 'pzz', 'zmz', 'zpz', 'zzm', 'zzp'])
             texturePaths[texName] = require('../assets/csys/' + texName + '.png')
 
+        this.color = 0xffffff
         const shader = THREE.MeshBasicMaterial
         const shaderProps = {
-            color: 0xffffff,
+            color: this.color,
             polygonOffset: true,
             polygonOffsetFactor: 1.0,
             polygonOffsetUnits: 5.0,
@@ -114,10 +115,10 @@ export default class Csys extends React.Component {
                     face.createInteraction().on({
                         [Object3.Events.Interaction.Hovered]: data => {
                             viewCsys.setCursor('pointer')
-                            data.material.animate({ color: new THREE.Color(0xdfdfdf) }).start(0)
+                            data.material.animate({ color: new THREE.Color(this.color - 0x101010) }).start(0)
                         },
                         [Object3.Events.Interaction.Unhovered]: data => {
-                            data.material.animate({ color: new THREE.Color(0xffffff) }).start(1000)
+                            data.material.animate({ color: new THREE.Color(this.color) }).start(1000)
                         },
                         [Object3.Events.Interaction.Clicked]: () => viewSession.controls.rotate(a1, a2),
                     })
@@ -159,10 +160,11 @@ export default class Csys extends React.Component {
         this.unsub = this.context.session.observe(
             state => state.globals.day,
             day => {
+                this.color = day ? 0xffffff : 0x5b5b5b
                 target.traverse(object =>
                     object.material && object.type === 'Mesh' && object
                         .animate(
-                            object.mapMaterial(material => ({ color: new THREE.Color(day ? 0xffffff : 0x5b5b5b) })),
+                            object.mapMaterial(material => ({ color: new THREE.Color(this.color) })),
                         )
                         .start(1000),
                 )
