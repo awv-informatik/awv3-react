@@ -38,5 +38,6 @@
       "stage-0",
       "react"
     ]
-  }
+  },
+  "peerDependencies": {}
 }

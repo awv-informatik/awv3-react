@@ -158,21 +158,23 @@ export default class Csys extends React.Component {
         target.add(viewCubeEdges)
         target.update && target.update()
 
-        this.unsub = this.context.session.observe(
-            state => state.globals.day,
-            day => {
-                this.color = day ? 0xffffff : 0x5b5b5b
-                target.traverse(
-                    object =>
-                        object.material &&
-                        object.type === 'Mesh' &&
-                        object
-                            .animate(object.mapMaterial(material => ({ color: new THREE.Color(this.color) })))
-                            .start(1000),
-                )
-            },
-            { fireOnStart: true },
-        )
+        if (this.context.session) {
+            this.unsub = this.context.session.observe(
+                state => state.globals.day,
+                day => {
+                    this.color = day ? 0xffffff : 0x5b5b5b
+                    target.traverse(
+                        object =>
+                            object.material &&
+                            object.type === 'Mesh' &&
+                            object
+                                .animate(object.mapMaterial(material => ({ color: new THREE.Color(this.color) })))
+                                .start(1000),
+                    )
+                },
+                { fireOnStart: true },
+            )
+        }
 
         viewCsys.controls.noZoom = viewCsys.controls.noRotate = viewCsys.controls.noPan = true
         viewSession.callbackAfter = () => {
