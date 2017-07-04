@@ -1,11 +1,11 @@
 {
   "name": "awv3-react",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "description": "",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
   "scripts": {
-    "start": "babel src --out-dir dist/"
+    "start": "babel src --out-dir dist/ && replace 'awv3/' 'awv3/dist/' ./dist -r"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "prop-types": "^15.5.10"
   },
   "devDependencies": {
-    "awv3": "^7.0.94",
+    "awv3": "^7.0.101",
     "awv3-protocol": "^1.0.14",
     "babel-cli": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
@@ -29,7 +29,8 @@
     "babel-preset-stage-0": "^6.24.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-redux": "^5.0.5"
+    "react-redux": "^5.0.5",
+    "replace": "^0.3.0"
   },
   "babel": {
     "presets": [
