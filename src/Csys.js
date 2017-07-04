@@ -7,6 +7,7 @@ import Object3 from 'awv3/three/object3'
 import Presentation from 'awv3/misc/presentation'
 
 export default class Csys extends React.Component {
+    static propTypes = { textures: PropTypes.array }
     static contextTypes = { session: PropTypes.object, view: PropTypes.object, shadow: PropTypes.bool }
     componentWillUnmount() {
         this.unsub()
@@ -17,9 +18,6 @@ export default class Csys extends React.Component {
         const radius = 15
         const chamfer = 0.4
         const viewCubeFaces = new THREE.Object3D()
-        const texturePaths = {}
-        for (texName of ['mzz', 'pzz', 'zmz', 'zpz', 'zzm', 'zzp'])
-            texturePaths[texName] = require('../assets/csys/' + texName + '.png')
 
         this.color = 0xffffff
         const shader = THREE.MeshBasicMaterial
@@ -32,6 +30,7 @@ export default class Csys extends React.Component {
             opacity: 1,
         }
 
+        let count = 0
         for (var sx = -1; sx <= 1; sx++)
             for (var sy = -1; sy <= 1; sy++)
                 for (var sz = -1; sz <= 1; sz++) {
@@ -45,13 +44,15 @@ export default class Csys extends React.Component {
                         var size = 2 * radius * (1 - chamfer)
                         geometry = new THREE.PlaneGeometry(size, size)
                         //set material (load texture)
-                        var letter = s => (s === 0 ? 'z' : s < 0 ? 'm' : 'p')
-                        var texName = letter(sx) + letter(sy) + letter(sz)
                         material = new shader({ ...shaderProps })
-                        new THREE.TextureLoader().load(texturePaths[texName], function(texture) {
-                            material.map = texture
-                            material.needsUpdate = true
-                        })
+
+                        if (this.props.textures) {
+                            new THREE.TextureLoader().load(this.props.textures[count++], function(texture) {
+                                material.map = texture
+                                material.needsUpdate = true
+                            })
+                        }
+
                         //choose coordinate system for the face
                         normal = new THREE.Vector3(sx, sy, sz)
                         axisX = sy === 0 ? new THREE.Vector3(sz, 0, -sx) : new THREE.Vector3(1, 0, 0)
@@ -161,15 +162,16 @@ export default class Csys extends React.Component {
             state => state.globals.day,
             day => {
                 this.color = day ? 0xffffff : 0x5b5b5b
-                target.traverse(object =>
-                    object.material && object.type === 'Mesh' && object
-                        .animate(
-                            object.mapMaterial(material => ({ color: new THREE.Color(this.color) })),
-                        )
-                        .start(1000),
+                target.traverse(
+                    object =>
+                        object.material &&
+                        object.type === 'Mesh' &&
+                        object
+                            .animate(object.mapMaterial(material => ({ color: new THREE.Color(this.color) })))
+                            .start(1000),
                 )
             },
-            { fireOnStart: true }
+            { fireOnStart: true },
         )
 
         viewCsys.controls.noZoom = viewCsys.controls.noRotate = viewCsys.controls.noPan = true
