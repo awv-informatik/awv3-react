@@ -26,7 +26,7 @@ export default class Csys extends React.Component {
             polygonOffset: true,
             polygonOffsetFactor: 1.0,
             polygonOffsetUnits: 5.0,
-            transparent: true,
+            transparent: false,
             opacity: 1,
         }
 
@@ -132,7 +132,7 @@ export default class Csys extends React.Component {
             pts.push(pts[0].clone())
             var geom = new THREE.Geometry()
             geom.vertices = pts
-            var lines = new THREE.Line(geom, new THREE.LineBasicMaterial({ color: 0, transparent: true, opacity: 0.1 }))
+            var lines = new THREE.Line(geom, new THREE.LineBasicMaterial({ color: 0, transparent: true, opacity: 0.3 }))
             lines.renderOrder = -1000
             face.matrix.decompose(lines.position, lines.quaternion, lines.scale)
             lines.updateMatrix()
@@ -162,13 +162,17 @@ export default class Csys extends React.Component {
             this.unsub = this.context.session.observe(
                 state => state.globals.day,
                 day => {
-                    this.color = day ? 0xffffff : 0x5b5b5b
+                    this.color = day ? 0xffffff : 0x454545
                     target.traverse(
                         object =>
                             object.material &&
                             object.type === 'Mesh' &&
                             object
-                                .animate(object.mapMaterial(material => ({ color: new THREE.Color(this.color) })))
+                                .animate(
+                                    object.mapMaterial({
+                                        color: new THREE.Color(this.color),
+                                    }),
+                                )
                                 .start(1000),
                     )
                 },

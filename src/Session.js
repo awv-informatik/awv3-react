@@ -78,13 +78,14 @@ export default class Session extends React.PureComponent {
         let file = event.target.files[0]
         if (file) {
             let name = file.name.substr(0, file.name.lastIndexOf('.'))
+            let extension = file.name.substr(file.name.lastIndexOf('.') + 1)
             var reader = new FileReader()
             reader.onload = event => {
                 let data = pack(event.target.result)
                 let connection = this.interface.addConnection(file.name)
                 connection.on('connected', () => {
                     this.interface.store
-                        .dispatch(connectionActions.load(connection.id, data))
+                        .dispatch(connectionActions.load(connection.id, data, extension))
                         .then(() =>
                             connection.pool.view.updateBounds().controls.focus().zoom().rotate(Math.PI, Math.PI / 2),
                         )
@@ -117,8 +118,8 @@ export default class Session extends React.PureComponent {
                             textures={this.props.csysTextures}
                             style={{
                                 position: 'absolute',
-                                bottom: 6,
-                                left: 6,
+                                bottom: 2,
+                                left: 2,
                                 width: 80,
                                 height: 80,
                                 ...this.props.csysStyle,

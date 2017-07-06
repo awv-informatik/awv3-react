@@ -3,7 +3,9 @@
 # Example using Canvas, View and a Csys
 
 ```js
+import * as THREE from 'three'
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { Canvas, View, Csys } from 'awv3-react'
 
 class Test extends React.Component {
@@ -38,7 +40,7 @@ class Test extends React.Component {
     }
 }
 
-ReactDOM.render(<Test />, document.querySelector('#app'))
+ReactDOM.render(<Test />, document.querySelector('#root'))
 ```
 
 # Example using Session
@@ -49,6 +51,7 @@ It has a number of defaults that will create a standard session with a Csys atta
 
 ```js
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { Session } from 'awv3-react'
 import { actions as connectionActions } from 'awv3/session/store/connections'
 
@@ -82,7 +85,7 @@ class Test extends React.Component {
     }
 }
 
-ReactDOM.render(<Test />, document.querySelector('#app'))
+ReactDOM.render(<Test />, document.querySelector('#root'))
 ```
 
 # API
