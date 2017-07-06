@@ -16,7 +16,7 @@ export default class Csys extends React.Component {
         const viewSession = this.context.view
         const viewCsys = this.ref.getInterface()
         const radius = 15
-        const chamfer = 0.4
+        const chamfer = 0.35
         const viewCubeFaces = new THREE.Object3D()
 
         this.color = 0xffffff
@@ -162,7 +162,7 @@ export default class Csys extends React.Component {
             this.unsub = this.context.session.observe(
                 state => state.globals.day,
                 day => {
-                    this.color = day ? 0xffffff : 0x454545
+                    this.color = day ? 0xffffff : 0x555555
                     target.traverse(
                         object =>
                             object.material &&
