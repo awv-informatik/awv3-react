@@ -1,9 +1,10 @@
 {
   "name": "awv3-react",
-  "version": "1.0.38",
+  "version": "1.0.39",
   "description": "",
   "main": "dist/index.js",
   "jsnext:main": "index.js",
+  "module": "index.js",
   "scripts": {
     "start": "babel *.js --out-dir dist/ && replace 'awv3/' 'awv3/dist/' ./dist -r"
   },

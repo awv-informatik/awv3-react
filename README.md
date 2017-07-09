@@ -22,16 +22,9 @@ class Test extends React.Component {
         this.view.updateBounds().controls.focus().zoom()
     }
 
-    onDoubleClick = () =>
-        // Center view on double-click
-        this.view.updateBounds().controls.focus().zoom()
-
     render() {
         return (
-            <Canvas
-                style={{ position: 'absolute', top: 0, left: 0 }}
-                resolution={1}
-                onDoubleClick={this.onDoubleClick}>
+            <Canvas style={{ position: 'absolute', top: 0, left: 0 }} resolution={1}>
                 <View ref="view" up={[0, 1, 0]}>
                     <Csys style={{ position: 'absolute', bottom: 0, width: 90, height: 90 }} />
                 </View>
@@ -56,30 +49,11 @@ import { Session } from 'awv3-react'
 import { actions as connectionActions } from 'awv3/session/store/connections'
 
 class Test extends React.Component {
-    componentDidMount() {
-        // Get awv3-session
-        let session = this.refs.session.getInterface()
-        // Add new connection, wait until it's connected
-        session.addConnection('new-tab').on('connected', async connection => {
-            // Execute command
-            await session.store.dispatch(
-                connectionActions.load(connection.id, '/usr/default/models/test.of1')
-            )
-            // Adjust camera controls
-            connection.pool.view.updateBounds().controls.focus().zoom()
-        });
-    }
-
-    handleOpenFile = event =>
-        // Forward open-file event to the Session components own implementation
-        this.refs.session.openFile(event)
-
+    handleOpenFile = event => this.refs.session.openFile(event)
     render() {
         return (
-            <Session
-                ref="session"
-                url="http://localhost:8181/">
-                <input type="file" onChange={this.handleOpenFile} />
+            <Session ref="session" url="http://localhost:8181/">
+                <input type="file" style={{ position: 'relative' }} onChange={this.handleOpenFile} />
             </Session>
         )
     }
