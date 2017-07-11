@@ -25,7 +25,7 @@ export default class Canvas extends React.PureComponent {
     componentDidMount() {
         this.interface.dom.style.position = 'absolute';
         this.ref.insertBefore(this.interface.dom, this.ref.firstChild);
-        setTimeout(() => this.interface.renderer.resize(), 200);
+        setTimeout(() => this.interface.renderer && this.interface.renderer.resize(), 200);
     }
 
     componentWillUnmount() {

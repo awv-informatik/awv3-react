@@ -75,24 +75,26 @@ export default class Session extends React.PureComponent {
     doubleClick = event => this.view.updateBounds().controls.focus().zoom()
 
     openFile = event => {
-        let file = event.target.files[0]
-        if (file) {
-            let name = file.name.substr(0, file.name.lastIndexOf('.'))
-            let extension = file.name.substr(file.name.lastIndexOf('.') + 1)
-            var reader = new FileReader()
-            reader.onload = event => {
-                let data = pack(event.target.result)
-                let connection = this.interface.addConnection(file.name)
-                connection.on('connected', () => {
-                    this.interface.store
-                        .dispatch(connectionActions.load(connection.id, data, extension))
-                        .then(() =>
-                            connection.pool.view.updateBounds().controls.focus().zoom().rotate(Math.PI, Math.PI / 2),
+        return new Promise(res => {
+            let file = event.target.files[0]
+            if (file) {
+                let name = file.name.substr(0, file.name.lastIndexOf('.'))
+                let extension = file.name.substr(file.name.lastIndexOf('.') + 1)
+                var reader = new FileReader()
+                reader.onload = event => {
+                    let data = pack(event.target.result)
+                    let connection = this.interface.addConnection(file.name)
+                    connection.on('connected', async () => {
+                        const result = await this.interface.store.dispatch(
+                            connectionActions.load(connection.id, data, extension),
                         )
-                })
+                        connection.pool.view.updateBounds().controls.focus().zoom().rotate(Math.PI, Math.PI / 2)
+                        res(result)
+                    })
+                }
+                reader.readAsArrayBuffer(file)
             }
-            reader.readAsArrayBuffer(file)
-        }
+        })
     }
 
     render() {

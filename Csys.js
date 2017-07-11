@@ -10,7 +10,7 @@ export default class Csys extends React.Component {
     static propTypes = { textures: PropTypes.array }
     static contextTypes = { session: PropTypes.object, view: PropTypes.object, shadow: PropTypes.bool }
     componentWillUnmount() {
-        this.unsub()
+        this.unsub && this.unsub()
     }
     componentDidMount() {
         const viewSession = this.context.view
