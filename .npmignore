@@ -10,5 +10,5 @@ Desktop.ini
 $RECYCLE.BIN/
 .DS_Store
 # User-specific stuff:
-.idea/workspace.xml
-.idea/tasks.xml
+/.idea/
+*.tgz

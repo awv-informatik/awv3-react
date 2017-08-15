@@ -97,30 +97,30 @@ aws4@^1.2.1:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
 
-awv3-icons@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/awv3-icons/-/awv3-icons-1.0.2.tgz#eadd332cfc5680f82e4ae6475804c467856173ca"
+awv3-icons@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/awv3-icons/-/awv3-icons-7.1.0.tgz#544713b812f3d7e6c48277cc4c4d67ea074d3d98"
 
-awv3-protocol@^1.0.14:
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/awv3-protocol/-/awv3-protocol-1.0.14.tgz#7fd23ac019b5d23ff90d50398ea60360f885962e"
+awv3-protocol@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/awv3-protocol/-/awv3-protocol-7.1.0.tgz#220094d6db3559503f67eebd63dd42f38b82dae3"
   dependencies:
     uuid-v4 "^0.1.0"
 
-awv3@^7.0.101:
-  version "7.0.101"
-  resolved "https://registry.yarnpkg.com/awv3/-/awv3-7.0.101.tgz#8f99779d622a0af1f8cb297dbe42d2c8f2c0a289"
+awv3@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/awv3/-/awv3-7.1.0.tgz#6477dc95a17463f674c95c376c2180ae43495a28"
   dependencies:
-    awv3-icons "^1.0.2"
-    awv3-protocol "^1.0.14"
-    babel-runtime "^6.23.0"
+    awv3-icons "^7.1.0"
+    awv3-protocol "^7.1.0"
+    babel-runtime "^6.25.0"
     base64-arraybuffer "^0.1.5"
-    element-resize-event "2.0.9"
-    fast-json-patch "^2.0.3"
+    dom-resize "^1.0.3"
+    fast-json-patch "^2.0.4"
     jsonpatch "^3.0.1"
     lodash "^4.17.4"
     pako "^1.0.5"
-    redux "^3.7.1"
+    redux "^3.7.2"
     redux-thunk "^2.2.0"
     shallow-equal "^1.0.0"
     socket.io-client "^2.0.3"
@@ -784,9 +784,16 @@ babel-register@^6.24.1:
     mkdirp "^0.5.1"
     source-map-support "^0.4.2"
 
-babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.23.0:
+babel-runtime@^6.18.0, babel-runtime@^6.22.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.23.0.tgz#0a9489f144de70efb3ce4300accdb329e2fc543b"
+  dependencies:
+    core-js "^2.4.0"
+    regenerator-runtime "^0.10.0"
+
+babel-runtime@^6.25.0:
+  version "6.25.0"
+  resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.25.0.tgz#33b98eaa5d482bb01a8d1aa6b437ad2b01aec41c"
   dependencies:
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
@@ -1032,15 +1039,15 @@ detect-indent@^4.0.0:
   dependencies:
     repeating "^2.0.0"
 
+dom-resize@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/dom-resize/-/dom-resize-1.0.3.tgz#df9d71e808171fdb66ee88517b0d1c02cdb98876"
+
 ecc-jsbn@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.1.tgz#0fc73a9ed5f0d53c38193398523ef7e543777505"
   dependencies:
     jsbn "~0.1.0"
-
-element-resize-event@2.0.9:
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/element-resize-event/-/element-resize-event-2.0.9.tgz#2f5e1581a296eb5275210c141bc56342e218f876"
 
 encoding@^0.1.11:
   version "0.1.12"
@@ -1109,9 +1116,9 @@ extsprintf@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.0.2.tgz#e1080e0658e300b06294990cc70e1502235fd550"
 
-fast-json-patch@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/fast-json-patch/-/fast-json-patch-2.0.3.tgz#d17ab0b94d742ec200bef297a378b57368a47f09"
+fast-json-patch@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/fast-json-patch/-/fast-json-patch-2.0.4.tgz#6aa2b2918ff6f5a16daddf2745547a9ccf36a9fb"
   dependencies:
     deep-equal "^1.0.1"
 
@@ -1825,9 +1832,9 @@ redux-thunk@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
 
-redux@^3.7.1:
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/redux/-/redux-3.7.1.tgz#bfc535c757d3849562ead0af18ac52122cd7268e"
+redux@^3.7.2:
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/redux/-/redux-3.7.2.tgz#06b73123215901d25d065be342eb026bc1c8537b"
   dependencies:
     lodash "^4.2.1"
     lodash-es "^4.2.1"
