@@ -1,12 +1,12 @@
 {
   "name": "awv3-react",
-  "version": "1.1.0",
+  "version": "7.2.0",
   "description": "",
   "main": "dist/index.js",
   "jsnext:main": "index.js",
   "module": "index.js",
   "scripts": {
-    "start": "babel *.js --out-dir dist/ && replace 'awv3/' 'awv3/dist/' ./dist -r"
+    "start": "babel *.js --out-dir dist/ && .\\node_modules\\.bin\\replace \"awv3/\" \"awv3/dist/\" ./dist -r"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,8 @@
   "homepage": "https://github.com/awv-informatik/awv3-react#readme",
   "peerDependencies": {},
   "devDependencies": {
+    "awv3": "^7.1.0",
+    "awv3-protocol": "^7.1.0",
     "babel-cli": "^6.24.1",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
