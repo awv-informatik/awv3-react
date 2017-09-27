@@ -32,6 +32,7 @@ export default class Session extends React.PureComponent {
         meshShaderOptions: PropTypes.object,
         envMap: PropTypes.object,
         csysTextures: PropTypes.array,
+        interpolatePoints: PropTypes.bool,
     }
     static defaultProps = {
         debug: Defaults.debug,
@@ -46,6 +47,7 @@ export default class Session extends React.PureComponent {
         renderOrder: Defaults.renderOrder,
         meshShader: Defaults.meshShader,
         meshShaderOptions: Defaults.meshShaderOptions,
+        interpolatePoints: false,
     }
     static childContextTypes = { session: PropTypes.object }
 
@@ -72,7 +74,11 @@ export default class Session extends React.PureComponent {
         // Destroy session?
     }
 
-    doubleClick = event => this.view.updateBounds().controls.focus().zoom()
+    doubleClick = event =>
+        this.view
+            .updateBounds()
+            .controls.focus()
+            .zoom()
 
     openFile = event => {
         return new Promise(res => {
@@ -88,7 +94,11 @@ export default class Session extends React.PureComponent {
                         const result = await this.interface.store.dispatch(
                             connectionActions.load(connection.id, data, extension),
                         )
-                        connection.pool.view.updateBounds().controls.focus().zoom().rotate(Math.PI, Math.PI / 2)
+                        connection.pool.view
+                            .updateBounds()
+                            .controls.focus()
+                            .zoom()
+                            .rotate(Math.PI, Math.PI / 2)
                         res(result)
                     })
                 }
@@ -100,11 +110,7 @@ export default class Session extends React.PureComponent {
     render() {
         if (this.props.store) return this.renderCanvas()
         else {
-            return (
-                <Provider store={this.interface.store}>
-                    {this.renderCanvas()}
-                </Provider>
-            )
+            return <Provider store={this.interface.store}>{this.renderCanvas()}</Provider>
         }
     }
 

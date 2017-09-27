@@ -84,6 +84,7 @@ static propTypes = {
     lineShaderOptions: PropTypes.object,
     meshShader: PropTypes.func,
     meshShaderOptions: PropTypes.object,
+    interpolatePoints: PropTypes.bool,
 };
 static defaultProps = {
     debug: Defaults.debug,
@@ -101,6 +102,7 @@ static defaultProps = {
         ...Defaults.meshShaderOptions,
         envMap: new CubeTexture(['px', 'nx', 'py', 'ny', 'pz', 'nz'], n => require('../assets/env/' + n + '.png')),
     },
+    interpolatePoints: false,
 };
 static childContextTypes = { session: PropTypes.object };
 ```
