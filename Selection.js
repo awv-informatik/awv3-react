@@ -21,7 +21,7 @@ export default class Selection extends React.PureComponent {
 
     componentDidMount() {
         this.sel = new Selector(this.props.session, {
-            ids: this.props.ids,
+            ids: this.state.ids,
             types: this.props.types,
             limit: this.props.limit,
         }).on({
