@@ -62,6 +62,29 @@ class Test extends React.Component {
 ReactDOM.render(<Test />, document.querySelector('#root'))
 ```
 
+# Example using Selection
+
+The Selection element sets up a selector and renders a single function-child with the resulting items.
+
+```js
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Session, Selection } from 'awv3-react'
+import { actions as connectionActions } from 'awv3/session/store/connections'
+
+const TestSelection = () => (
+    <Selection>
+        {props => `${props.ids} selected, hovered: ${props.hovered && props.hovered.material.id}`}
+    </Selection>
+)
+
+ReactDOM.render((
+    <Session ref="session" url="http://localhost:8181/">
+        <TestSelection />
+    </Session>
+), document.querySelector('#root'))
+```
+
 # API
 
 **Session**
@@ -125,6 +148,7 @@ static childContextTypes = { view: PropTypes.object };
 **Selection**
 
 ```js
-static propTypes = { types: PropTypes.array, limit: PropTypes.number }
-static defaultProps = { types: ['Mesh'], limit: Infinity }
+static contextTypes = { session: PropTypes.object }
+static propTypes = { enabled: PropTypes.bool, types: PropTypes.array, limit: PropTypes.number, children: PropTypes.function }
+static defaultProps = { children: null, enabled: true, types: ['Mesh'], limit: Infinity }
 ```

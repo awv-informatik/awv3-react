@@ -7,12 +7,15 @@ const HOVERED = THREE.Object3D.Events.Interaction.Hovered
 const UNHOVERED = THREE.Object3D.Events.Interaction.Unhovered
 
 export default class Selection extends React.PureComponent {
+    static contextTypes = { session: PropTypes.object }
     static propTypes = {
         enabled: PropTypes.bool,
         types: PropTypes.array,
         limit: PropTypes.number,
+        children: PropTypes.function,
     }
     static defaultProps = {
+        children: null,
         enabled: true,
         types: ['Mesh'],
         limit: Infinity,
@@ -20,7 +23,7 @@ export default class Selection extends React.PureComponent {
     state = { materials: [], ids: [], hovered: undefined }
 
     componentDidMount() {
-        this.sel = new Selector(this.props.session, {
+        this.sel = new Selector(this.context.session, {
             ids: this.state.ids,
             types: this.props.types,
             limit: this.props.limit,
