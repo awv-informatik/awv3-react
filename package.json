@@ -6,7 +6,7 @@
   "jsnext:main": "index.js",
   "module": "index.js",
   "scripts": {
-    "start": "babel *.js --out-dir dist/ && npx replace \"awv3/\" \"awv3/dist/\" ./dist -r"
+    "start": "babel *.js --out-dir dist/ && replace \"awv3/\" \"awv3/dist/\" ./dist -r"
   },
   "repository": {
     "type": "git",
