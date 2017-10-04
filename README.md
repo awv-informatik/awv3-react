@@ -85,7 +85,7 @@ static propTypes = {
     meshShader: PropTypes.func,
     meshShaderOptions: PropTypes.object,
     interpolatePoints: PropTypes.bool,
-};
+}
 static defaultProps = {
     debug: Defaults.debug,
     pool,
@@ -103,21 +103,28 @@ static defaultProps = {
         envMap: new CubeTexture(['px', 'nx', 'py', 'ny', 'pz', 'nz'], n => require('../assets/env/' + n + '.png')),
     },
     interpolatePoints: false,
-};
-static childContextTypes = { session: PropTypes.object };
+}
+static childContextTypes = { session: PropTypes.object }
 ```
 
 **Canvas**
 
 ```js
-static propTypes = { resolution: PropTypes.number };
-static childContextTypes = { canvas: PropTypes.object };
+static propTypes = { resolution: PropTypes.number }
+static childContextTypes = { canvas: PropTypes.object }
 ```
 
 **View**
 
 ```js
-static propTypes = { up: PropTypes.array, stats: PropTypes.bool, ambientIntensity: PropTypes.number };
-static defaultProps = { up: Defaults.up, stats: Defaults.stats, ambientIntensity: Defaults.ambientIntensity };
+static propTypes = { up: PropTypes.array, stats: PropTypes.bool, ambientIntensity: PropTypes.number }
+static defaultProps = { up: Defaults.up, stats: Defaults.stats, ambientIntensity: Defaults.ambientIntensity }
 static childContextTypes = { view: PropTypes.object };
+```
+
+**Selection**
+
+```js
+static propTypes = { types: PropTypes.array, limit: PropTypes.number }
+static defaultProps = { types: ['Mesh'], limit: Infinity }
 ```
