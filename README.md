@@ -149,6 +149,6 @@ static childContextTypes = { view: PropTypes.object };
 
 ```js
 static contextTypes = { session: PropTypes.object }
-static propTypes = { enabled: PropTypes.bool, types: PropTypes.array, limit: PropTypes.number, children: PropTypes.function }
-static defaultProps = { children: null, enabled: true, types: ['Mesh'], limit: Infinity }
+static propTypes = { enabled: PropTypes.bool, types: PropTypes.array, limit: PropTypes.number, children: PropTypes.func.isRequired }
+static defaultProps = { enabled: true, types: ['Mesh'], limit: Infinity }
 ```

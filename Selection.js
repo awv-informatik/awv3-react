@@ -12,10 +12,9 @@ export default class Selection extends React.PureComponent {
         enabled: PropTypes.bool,
         types: PropTypes.array,
         limit: PropTypes.number,
-        children: PropTypes.function,
+        children: PropTypes.func.isRequired,
     }
     static defaultProps = {
-        children: null,
         enabled: true,
         types: ['Mesh'],
         limit: Infinity,
