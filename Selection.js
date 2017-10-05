@@ -22,6 +22,23 @@ export default class Selection extends React.PureComponent {
     state = { materials: [], ids: [], hovered: undefined }
 
     componentDidMount() {
+        if (this.props.enabled) this.createSelector()
+    }
+
+    componentWillReceiveProps(next) {
+        if (this.sel && !next.enabled) this.destroySelector()
+        else if (!this.sel && next.enabled) this.createSelector()
+    }
+
+    componentWillUnmount() {
+        this.destroySelector()
+    }
+
+    render() {
+        return this.props.children(this.state) || null
+    }
+
+    createSelector() {
         this.sel = new Selector(this.context.session, {
             ids: this.state.ids,
             types: this.props.types,
@@ -32,17 +49,9 @@ export default class Selection extends React.PureComponent {
             [UNHOVERED]: props => this.setState({ hovered: undefined }),
         })
     }
-    componentWillReceiveProps(next) {
-        if (this.sel && !next.enabled)
-            this.componentWillUnmount()
-        else if (!this.sel && next.enabled)
-            this.componentDidMount()
-    }
-    componentWillUnmount() {
+
+    destroySelector() {
         this.sel.destroy()
         this.sel = undefined
-    }
-    render() {
-        return this.props.children(this.state) || null
     }
 }

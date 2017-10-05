@@ -121,10 +121,7 @@ static defaultProps = {
     updateView: Defaults.updateView,
     renderOrder: Defaults.renderOrder,
     meshShader: Defaults.meshShader,
-    meshShaderOptions: {
-        ...Defaults.meshShaderOptions,
-        envMap: new CubeTexture(['px', 'nx', 'py', 'ny', 'pz', 'nz'], n => require('../assets/env/' + n + '.png')),
-    },
+    meshShaderOptions: Defaults.meshShaderOptions,
     interpolatePoints: false,
 }
 static childContextTypes = { session: PropTypes.object }
