@@ -7,16 +7,21 @@ import Object3 from 'awv3/three/object3'
 import Presentation from 'awv3/misc/presentation'
 
 export default class Csys extends React.Component {
-    static propTypes = { textures: PropTypes.array }
+    static propTypes = {
+        textures: PropTypes.array,
+        radius: PropTypes.number,
+        chamfer: PropTypes.number,
+        opacity: PropTypes.number,
+    }
+    static defaultProps = { radius: 14, chamfer: 0.35, opacity: 1 }
     static contextTypes = { session: PropTypes.object, view: PropTypes.object, shadow: PropTypes.bool }
     componentWillUnmount() {
         this.unsub && this.unsub()
     }
     componentDidMount() {
+        const { radius, chamfer, opacity } = this.props
         const viewSession = this.context.view
         const viewCsys = this.ref.getInterface()
-        const radius = 14
-        const chamfer = 0.35
         const viewCubeFaces = new THREE.Object3D()
 
         this.color = 0xffffff
@@ -26,8 +31,8 @@ export default class Csys extends React.Component {
             polygonOffset: true,
             polygonOffsetFactor: 1.0,
             polygonOffsetUnits: 5.0,
-            transparent: false,
-            opacity: 1,
+            transparent: opacity < 1,
+            opacity: opacity,
         }
 
         let count = 0
@@ -190,7 +195,12 @@ export default class Csys extends React.Component {
                 dst.aspect = oldAspect
                 dst.updateProjectionMatrix()
             }
-            dst.position.copy(src.getWorldDirection().clone().multiplyScalar(-100.0))
+            dst.position.copy(
+                src
+                    .getWorldDirection()
+                    .clone()
+                    .multiplyScalar(-100.0),
+            )
             viewCsys.invalidate()
         }
     }
