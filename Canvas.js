@@ -35,14 +35,13 @@ export default class Canvas extends React.PureComponent {
     }
 
     render() {
+        const { resolution, children, style, ...props } = this.props
         return (
             <div
                 ref={ref => this.ref = ref}
-                className={this.props.className}
-                onDoubleClick={this.props.onDoubleClick}
-                onContextMenu={this.onContextMenu}
-                style={{ height: '100%', width: '100%', overflow: 'hidden', ...this.props.style }}>
-                {this.props.children}
+                {...props}
+                style={{ height: '100%', width: '100%', overflow: 'hidden', ...style }}>
+                {children}
             </div>
         );
     }

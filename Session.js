@@ -74,15 +74,9 @@ export default class Session extends React.PureComponent {
         // Destroy session?
     }
 
-    doubleClick = event =>
-        this.view
-            .updateBounds()
-            .controls.focus()
-            .zoom()
-
-    openFile = event => {
+    open(files) {
         return new Promise(res => {
-            let file = event.target.files[0]
+            const file = files[0]
             if (file) {
                 let name = file.name.substr(0, file.name.lastIndexOf('.'))
                 let extension = file.name.substr(file.name.lastIndexOf('.') + 1)
@@ -107,6 +101,14 @@ export default class Session extends React.PureComponent {
         })
     }
 
+    openFile = event => this.open(event.target.files)
+    onDrop = event => event.preventDefault() || this.open(event.dataTransfer.files)
+    onDoubleClick = event =>
+        this.view
+            .updateBounds()
+            .controls.focus()
+            .zoom()
+
     render() {
         if (this.props.store) return this.renderCanvas()
         else {
@@ -120,10 +122,12 @@ export default class Session extends React.PureComponent {
                 <Canvas
                     style={{ position: 'absolute', top: 0, left: 0, ...this.props.canvasStyle }}
                     resolution={this.props.resolution}
-                    onDoubleClick={this.doubleClick}>
+                    onDoubleClick={this.onDoubleClick}
+                    onDragOver={event => event.preventDefault()}
+                    onDrop={this.onDrop}>
                     <View ref={ref => (this.ref = ref)} up={this.props.up} stats={this.props.stats}>
                         <Csys
-                            textures={this.props.csysTextures}
+                            {...this.props.csys}
                             style={{
                                 position: 'absolute',
                                 bottom: 2,
