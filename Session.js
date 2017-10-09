@@ -103,6 +103,8 @@ export default class Session extends React.PureComponent {
 
     openFile = event => this.open(event.target.files)
     onDrop = event => event.preventDefault() || this.open(event.dataTransfer.files)
+    onDragEnter = event => event.preventDefault()
+    onDragLeave = event => event.preventDefault()
     onDoubleClick = event =>
         this.view
             .updateBounds()
@@ -124,6 +126,8 @@ export default class Session extends React.PureComponent {
                     resolution={this.props.resolution}
                     onDoubleClick={this.onDoubleClick}
                     onDragOver={event => event.preventDefault()}
+                    onDragEnter={this.onDragEnter}
+                    onDragLeave={this.onDragLeave}
                     onDrop={this.onDrop}>
                     <View ref={ref => (this.ref = ref)} up={this.props.up} stats={this.props.stats}>
                         <Csys

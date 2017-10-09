@@ -16,6 +16,7 @@ export default class View extends React.PureComponent {
         return this.interface;
     }
     componentDidMount() {
+        console.log("new view")
         this.interface = new ViewImpl(this.context.canvas, {
             dom: this.ref,
             up: new THREE.Vector3().fromArray(this.props.up),
@@ -34,6 +35,7 @@ export default class View extends React.PureComponent {
         return (
             <div
                 ref={ref => this.ref = ref}
+                className={this.props.className}
                 style={{
                     position: 'absolute',
                     height: '100%',
