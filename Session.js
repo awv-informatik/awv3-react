@@ -33,6 +33,8 @@ export default class Session extends React.PureComponent {
         envMap: PropTypes.object,
         csysTextures: PropTypes.array,
         interpolatePoints: PropTypes.bool,
+        drop: PropTypes.bool,
+        onOpen: PropTypes.func,
     }
     static defaultProps = {
         debug: Defaults.debug,
@@ -48,8 +50,11 @@ export default class Session extends React.PureComponent {
         meshShader: Defaults.meshShader,
         meshShaderOptions: Defaults.meshShaderOptions,
         interpolatePoints: false,
+        drop: false,
     }
     static childContextTypes = { session: PropTypes.object }
+
+    state = { onDrop: false }
 
     constructor(props) {
         super()
@@ -75,36 +80,46 @@ export default class Session extends React.PureComponent {
     }
 
     open(files) {
-        return new Promise(res => {
-            const file = files[0]
-            if (file) {
-                let name = file.name.substr(0, file.name.lastIndexOf('.'))
-                let extension = file.name.substr(file.name.lastIndexOf('.') + 1)
-                var reader = new FileReader()
-                reader.onload = event => {
-                    let data = pack(event.target.result)
-                    let connection = this.interface.addConnection(file.name)
-                    connection.on('connected', async () => {
-                        const result = await this.interface.store.dispatch(
-                            connectionActions.load(connection.id, data, extension),
-                        )
-                        connection.pool.view
-                            .updateBounds()
-                            .controls.focus()
-                            .zoom()
-                            .rotate(Math.PI, Math.PI / 2)
-                        res(result)
+        files = [...files]
+        this.setState({ onDrop: false })
+        if (this.props.drop) {
+            const promise = Promise.all(
+                files.map(file => {
+                    return new Promise(res => {
+                        let name = file.name.substr(0, file.name.lastIndexOf('.'))
+                        let extension = file.name.substr(file.name.lastIndexOf('.') + 1)
+                        var reader = new FileReader()
+                        reader.onload = event => {
+                            let data = pack(event.target.result)
+                            let connection = this.interface.addConnection(file.name)
+                            connection.on('connected', async () => {
+                                const result = await this.interface.store.dispatch(
+                                    connectionActions.load(connection.id, data, extension),
+                                )
+                                connection.pool.view
+                                    .updateBounds()
+                                    .controls.focus()
+                                    .zoom()
+                                    .rotate(Math.PI, Math.PI / 2)
+
+                                res(result)
+                            })
+                        }
+                        reader.readAsArrayBuffer(file)
                     })
-                }
-                reader.readAsArrayBuffer(file)
-            }
-        })
+                }),
+            )
+
+            if (this.props.onOpen) this.props.onOpen(promise)
+            return promise
+        }
     }
 
     openFile = event => this.open(event.target.files)
     onDrop = event => event.preventDefault() || this.open(event.dataTransfer.files)
-    onDragEnter = event => event.preventDefault()
-    onDragLeave = event => event.preventDefault()
+    onDragEnter = event => event.preventDefault() || this.setState({ onDrop: true })
+    onDragLeave = event => event.preventDefault() || this.setState({ onDrop: false })
+    onDragOver = event => event.preventDefault()
     onDoubleClick = event =>
         this.view
             .updateBounds()
@@ -119,31 +134,39 @@ export default class Session extends React.PureComponent {
     }
 
     renderCanvas() {
+        const { onDrop } = this.state
+        const { style, canvasStyle, className, resolution, up, stats, csys, children } = this.props
         return (
-            <div className={this.props.className} style={this.props.style}>
+            <div className={className} style={style}>
                 <Canvas
-                    style={{ position: 'absolute', top: 0, left: 0, ...this.props.canvasStyle }}
-                    resolution={this.props.resolution}
+                    style={{
+                        position: 'absolute',
+                        transition: 'background-color 0.5s',
+                        top: 0,
+                        left: 0,
+                        backgroundColor: onDrop ? 'rgba(0, 0, 0, 0.25)' : 'transparent',
+                        ...canvasStyle,
+                    }}
+                    resolution={resolution}
                     onDoubleClick={this.onDoubleClick}
-                    onDragOver={event => event.preventDefault()}
+                    onDragOver={this.onDragOver}
                     onDragEnter={this.onDragEnter}
                     onDragLeave={this.onDragLeave}
                     onDrop={this.onDrop}>
-                    <View ref={ref => (this.ref = ref)} up={this.props.up} stats={this.props.stats}>
+                    <View ref={ref => (this.ref = ref)} up={up} stats={stats}>
                         <Csys
-                            {...this.props.csys}
                             style={{
                                 position: 'absolute',
                                 bottom: 2,
                                 left: 2,
                                 width: 80,
                                 height: 80,
-                                ...this.props.csysStyle,
                             }}
+                            {...csys}
                         />
                     </View>
                 </Canvas>
-                {this.props.children}
+                {children}
             </div>
         )
     }

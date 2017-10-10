@@ -16,7 +16,6 @@ export default class View extends React.PureComponent {
         return this.interface;
     }
     componentDidMount() {
-        console.log("new view")
         this.interface = new ViewImpl(this.context.canvas, {
             dom: this.ref,
             up: new THREE.Vector3().fromArray(this.props.up),

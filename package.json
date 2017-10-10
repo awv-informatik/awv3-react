@@ -1,6 +1,6 @@
 {
   "name": "awv3-react",
-  "version": "7.5.0",
+  "version": "7.6.0",
   "description": "",
   "main": "dist/index.js",
   "jsnext:main": "index.js",
@@ -38,6 +38,7 @@
   "dependencies": {
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
+    "react-addons-shallow-compare": "^15.6.2",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6"
   }
