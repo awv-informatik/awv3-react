@@ -104,7 +104,7 @@ export default class Session extends React.PureComponent {
                                     .zoom()
                                     .rotate(Math.PI, Math.PI / 2)
 
-                                res(result)
+                                res({ ...result, connection })
                             })
                         }
                         reader.readAsArrayBuffer(file)
