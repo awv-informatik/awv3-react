@@ -35,6 +35,7 @@ export default class Session extends React.PureComponent {
         interpolatePoints: PropTypes.bool,
         drop: PropTypes.bool,
         onOpen: PropTypes.func,
+        onInitConnection: PropTypes.func,
     }
     static defaultProps = {
         debug: Defaults.debug,
@@ -93,6 +94,7 @@ export default class Session extends React.PureComponent {
                             let data = pack(event.target.result)
                             let connection = this.interface.addConnection(file.name)
                             connection.on('connected', async () => {
+                                if (this.props.onInitConnection) await this.props.onInitConnection(this.interface, connection)
                                 const result = await this.interface.store.dispatch(
                                     connectionActions.load(connection.id, data, extension),
                                 )
