@@ -13,6 +13,8 @@ import View from './View'
 import Csys from './Csys'
 
 export default class Session extends React.PureComponent {
+    static contextTypes = { session: PropTypes.object }
+
     static propTypes = {
         debug: PropTypes.bool,
         pool: PropTypes.func,
@@ -57,9 +59,9 @@ export default class Session extends React.PureComponent {
 
     state = { onDrop: false }
 
-    constructor(props) {
+    constructor(props, context) {
         super()
-        this.interface = window.session = new SessionImpl(props)
+        this.interface = window.session = context.session || new SessionImpl(props)
     }
 
     getChildContext() {
@@ -94,15 +96,18 @@ export default class Session extends React.PureComponent {
                             let data = pack(event.target.result)
                             let connection = this.interface.addConnection(file.name)
                             connection.on('connected', async () => {
-                                if (this.props.onInitConnection) await this.props.onInitConnection(this.interface, connection)
+                                if (this.props.onInitConnection)
+                                    await this.props.onInitConnection(connection)
                                 const result = await this.interface.store.dispatch(
                                     connectionActions.load(connection.id, data, extension),
                                 )
-                                connection.pool.view
-                                    .updateBounds()
-                                    .controls.focus()
-                                    .zoom()
-                                    .rotate(Math.PI, Math.PI / 2)
+
+                                connection.pool.view &&
+                                    connection.pool.view
+                                        .updateBounds()
+                                        .controls.focus()
+                                        .zoom()
+                                        .rotate(Math.PI, Math.PI / 2)
 
                                 res({ ...result, connection })
                             })
@@ -129,10 +134,8 @@ export default class Session extends React.PureComponent {
             .zoom()
 
     render() {
-        if (this.props.store) return this.renderCanvas()
-        else {
-            return <Provider store={this.interface.store}>{this.renderCanvas()}</Provider>
-        }
+        if (this.context.session) return this.renderCanvas()
+        else return <Provider store={this.interface.store}>{this.renderCanvas()}</Provider>
     }
 
     renderCanvas() {
