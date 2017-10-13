@@ -83,7 +83,7 @@ export default class Session extends React.PureComponent {
     }
 
     open(files) {
-        files = [...files]
+        files = Array.from(files)
         this.setState({ onDrop: false })
         if (this.props.drop) {
             const promise = Promise.all(
