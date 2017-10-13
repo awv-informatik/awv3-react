@@ -38,6 +38,7 @@ export default class Canvas extends React.PureComponent {
         const { resolution, children, style, ...props } = this.props
         return (
             <div
+                onContextMenu={this.onContextMenu}
                 ref={ref => (this.ref = ref)}
                 {...props}
                 style={{ height: '100%', width: '100%', overflow: 'hidden', ...style }}>
