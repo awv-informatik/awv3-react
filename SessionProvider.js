@@ -51,7 +51,7 @@ export default class SessionProvider extends React.PureComponent {
 
     constructor(props) {
         super()
-        this.interface = new SessionImpl(props)
+        this.interface = props.session || new SessionImpl(props)
     }
 
     getChildContext() {
