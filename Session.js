@@ -96,8 +96,7 @@ export default class Session extends React.PureComponent {
                             let data = pack(event.target.result)
                             let connection = this.interface.addConnection(file.name)
                             connection.on('connected', async () => {
-                                if (this.props.onInitConnection)
-                                    await this.props.onInitConnection(connection)
+                                if (this.props.onInitConnection) await this.props.onInitConnection(connection)
                                 const result = await this.interface.store.dispatch(
                                     connectionActions.load(connection.id, data, extension),
                                 )
@@ -159,16 +158,18 @@ export default class Session extends React.PureComponent {
                     onDragLeave={this.onDragLeave}
                     onDrop={this.onDrop}>
                     <View ref={ref => (this.ref = ref)} up={up} stats={stats}>
-                        <Csys
-                            style={{
-                                position: 'absolute',
-                                bottom: 2,
-                                left: 2,
-                                width: 80,
-                                height: 80,
-                            }}
-                            {...csys}
-                        />
+                        {csys.visible !== false && (
+                            <Csys
+                                style={{
+                                    position: 'absolute',
+                                    bottom: 2,
+                                    left: 2,
+                                    width: 80,
+                                    height: 80,
+                                }}
+                                {...csys}
+                            />
+                        )}
                     </View>
                 </Canvas>
                 {children}
