@@ -27,11 +27,11 @@
     "replace": "^0.3.0"
   },
   "peerDependencies": {
-    "awv3": "7.x",
-    "awv3-protocol": "7.x",
-    "prop-types": "15.x",
-    "react": "16.x",
-    "react-dom": "16.x",
-    "react-redux": "5.x"
+    "awv3": ">=8",
+    "awv3-protocol": ">=7",
+    "prop-types": ">=15",
+    "react": ">=16",
+    "react-dom": ">=16",
+    "react-redux": ">=5"
   }
 }
