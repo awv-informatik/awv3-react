@@ -18,16 +18,16 @@ export default class Csys extends React.Component {
     componentWillUnmount() {
         this.unsub && this.unsub()
     }
-    componentDidMount() {
-        const { radius, chamfer, opacity } = this.props
-        const viewSession = this.context.view
-        const viewCsys = this.ref.getInterface()
+
+    static init(props, context, view) {
+        const { radius, chamfer, opacity } = props
+        const viewSession = context.view
+        const viewCsys = view
         const viewCubeFaces = new THREE.Object3D()
 
-        this.color = 0xffffff
         const shader = THREE.MeshBasicMaterial
         const shaderProps = {
-            color: this.color,
+            color: 0xffffff,
             polygonOffset: true,
             polygonOffsetFactor: 1.0,
             polygonOffsetUnits: 5.0,
@@ -51,8 +51,8 @@ export default class Csys extends React.Component {
                         //set material (load texture)
                         material = new shader({ ...shaderProps })
 
-                        if (this.props.textures) {
-                            new THREE.TextureLoader().load(this.props.textures[count++], function(texture) {
+                        if (props.textures) {
+                            new THREE.TextureLoader().load(props.textures[count++], function(texture) {
                                 material.map = texture
                                 material.needsUpdate = true
                             })
@@ -121,10 +121,10 @@ export default class Csys extends React.Component {
                     face.createInteraction().on({
                         [Object3.Events.Interaction.Hovered]: data => {
                             viewCsys.setCursor('pointer')
-                            data.material.animate({ color: new THREE.Color(this.color - 0x101010) }).start(0)
+                            data.material.animate({ color: new THREE.Color(0xffffff - 0x101010) }).start(0)
                         },
                         [Object3.Events.Interaction.Unhovered]: data => {
-                            data.material.animate({ color: new THREE.Color(this.color) }).start(1000)
+                            data.material.animate({ color: new THREE.Color(0xffffff) }).start(1000)
                         },
                         [Object3.Events.Interaction.Clicked]: () => viewSession.controls.rotate(a1, a2),
                     })
@@ -147,9 +147,9 @@ export default class Csys extends React.Component {
         viewCubeFaces.quaternion.setFromUnitVectors(viewCubeFaces.up, viewCsys.camera.up)
 
         let target = viewCsys.scene
-        if (this.props.shadow) {
+        if (props.shadow) {
             let presentation = new Presentation({
-                session: this.context.session,
+                session: context.session,
                 shadowHeight: 0.7,
                 ambient: 1,
                 shadowFactor: 1.3,
@@ -162,28 +162,6 @@ export default class Csys extends React.Component {
         target.add(viewCubeFaces)
         target.add(viewCubeEdges)
         target.update && target.update()
-
-        if (this.context.session) {
-            this.unsub = this.context.session.observe(
-                state => state.globals.day,
-                day => {
-                    this.color = day ? 0xffffff : 0x656565
-                    target.traverse(
-                        object =>
-                            object.material &&
-                            object.type === 'Mesh' &&
-                            object
-                                .animate(
-                                    object.mapMaterial({
-                                        color: new THREE.Color(this.color),
-                                    }),
-                                )
-                                .start(1000),
-                    )
-                },
-                { fireOnStart: true },
-            )
-        }
 
         viewCsys.controls.noZoom = viewCsys.controls.noRotate = viewCsys.controls.noPan = true
         viewSession.callbackAfter = () => {
@@ -204,6 +182,11 @@ export default class Csys extends React.Component {
             viewCsys.invalidate()
         }
     }
+
+    componentDidMount() {
+        Csys.init(this.props, this.context, this.ref.getInterface())
+    }
+
     render() {
         return (
             <Canvas style={this.props.style} resolution={2} className="csys">

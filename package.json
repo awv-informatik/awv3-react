@@ -1,6 +1,6 @@
 {
   "name": "awv3-react",
-  "version": "7.8.5",
+  "version": "7.9.0",
   "description": "",
   "main": "dist/index.js",
   "jsnext:main": "index.js",
