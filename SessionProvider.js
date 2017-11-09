@@ -51,7 +51,7 @@ export default class SessionProvider extends React.PureComponent {
 
     constructor(props) {
         super()
-        this.interface = props.session || new SessionImpl(props)
+        this.interface = props.session || new SessionImpl(props)
     }
 
     getChildContext() {
@@ -66,7 +66,9 @@ export default class SessionProvider extends React.PureComponent {
         const { className, style, children } = this.props
         return (
             <Provider store={this.interface.store}>
-                <div className={className} style={{ width: '100%', height: '100%', ...style}}>{children}</div>
+                <div className={className} style={{ width: '100%', height: '100%', ...style }}>
+                    {children}
+                </div>
             </Provider>
         )
     }
