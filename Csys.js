@@ -14,7 +14,8 @@ export default class Csys extends React.Component {
         opacity: PropTypes.number,
     }
     static defaultProps = { radius: 14, chamfer: 0.35, opacity: 1 }
-    static contextTypes = { session: PropTypes.object, view: PropTypes.object, shadow: PropTypes.bool }
+    static contextTypes = { session: PropTypes.object, view: PropTypes.object }
+
     componentWillUnmount() {
         this.unsub && this.unsub()
     }
@@ -146,19 +147,7 @@ export default class Csys extends React.Component {
 
         viewCubeFaces.quaternion.setFromUnitVectors(viewCubeFaces.up, viewCsys.camera.up)
 
-        let target = viewCsys.scene
-        if (props.shadow) {
-            let presentation = new Presentation({
-                session: context.session,
-                shadowHeight: 0.7,
-                ambient: 1,
-                shadowFactor: 1.3,
-                lights: false,
-            })
-            viewCsys.scene.add(presentation)
-            target = presentation
-        }
-
+        const target = viewCsys.scene
         target.add(viewCubeFaces)
         target.add(viewCubeEdges)
         target.update && target.update()
@@ -183,7 +172,7 @@ export default class Csys extends React.Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         Csys.init(this.props, this.context, this.ref.getInterface())
     }
 

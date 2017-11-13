@@ -1,12 +1,14 @@
 {
   "name": "awv3-react",
-  "version": "7.9.0",
+  "version": "8.0.1",
   "description": "",
-  "main": "dist/index.js",
-  "jsnext:main": "index.js",
+  "private": true,
   "module": "index.js",
   "scripts": {
-    "start": "babel *.js --out-dir dist/ && replace \"awv3/\" \"awv3/dist/\" ./dist -r"
+    "start": "npm run clean && npm run build && npm run copy",
+    "build": "babel *.js --out-dir dist",
+    "clean": "rimraf ./dist",
+    "copy": "copyfiles package.json README.md .gitignore .npmignore dist && json -I -f dist/package.json -e 'this.private=false'"
   },
   "repository": {
     "type": "git",
@@ -18,13 +20,19 @@
     "url": "https://github.com/awv-informatik/awv3-react/issues"
   },
   "homepage": "https://github.com/awv-informatik/awv3-react#readme",
+  "dependencies": {
+    "@babel/runtime": "^7.0.0-beta.31"
+  },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.31",
     "@babel/core": "7.0.0-beta.31",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.31",
     "@babel/preset-env": "7.0.0-beta.31",
     "@babel/preset-react": "7.0.0-beta.31",
     "@babel/preset-stage-0": "7.0.0-beta.31",
-    "replace": "^0.3.0"
+    "copyfiles": "^1.2.0",
+    "json": "^9.0.6",
+    "rimraf": "^2.6.2"
   },
   "peerDependencies": {
     "awv3": ">=8",
