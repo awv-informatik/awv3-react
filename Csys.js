@@ -157,7 +157,7 @@ export default class Csys extends React.Component {
             var src = viewSession.camera
             var dst = viewCsys.camera
             var oldAspect = dst.aspect
-            dst.copy(src)
+            dst.copy(src, false)
             if (oldAspect !== undefined) {
                 dst.aspect = oldAspect
                 dst.updateProjectionMatrix()
