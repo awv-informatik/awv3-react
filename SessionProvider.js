@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { moduleContext } from 'react-contextual'
 import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 import Defaults from 'awv3/core/defaults'
@@ -9,6 +10,7 @@ import CubeTexture from 'awv3/three/cubetexture'
 import protocol from 'awv3/communication/socketio'
 import pool from 'awv3/misc/presentation'
 
+@moduleContext()
 export default class SessionProvider extends React.PureComponent {
     static propTypes = {
         debug: PropTypes.bool,
@@ -45,7 +47,6 @@ export default class SessionProvider extends React.PureComponent {
         meshShaderOptions: Defaults.meshShaderOptions,
         interpolatePoints: false,
     }
-    static childContextTypes = { session: PropTypes.object }
 
     state = { onDrop: false }
 
@@ -54,21 +55,19 @@ export default class SessionProvider extends React.PureComponent {
         this.interface = props.session || new SessionImpl(props)
     }
 
-    getChildContext() {
-        return { session: this.interface }
-    }
-
-    getInterface() {
-        return this.interface
+    componentWillUnmount() {
+        // Destroy session?
     }
 
     render() {
-        const { className, style, children } = this.props
+        const { className, style, children, context: Context } = this.props
         return (
             <Provider store={this.interface.store}>
-                <div className={className} style={{ width: '100%', height: '100%', ...style }}>
-                    {children}
-                </div>
+                <Context.Provider value={this.interface}>
+                    <div className={className} style={{ width: '100%', height: '100%', ...style }}>
+                        {children}
+                    </div>
+                </Context.Provider>
             </Provider>
         )
     }

@@ -1,7 +1,8 @@
 {
   "name": "awv3-react",
-  "version": "8.0.4",
+  "version": "8.1.0",
   "description": "",
+  "sideEffects": false,
   "private": true,
   "module": "index.js",
   "scripts": {
@@ -21,15 +22,16 @@
   },
   "homepage": "https://github.com/awv-informatik/awv3-react#readme",
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.32"
+    "@babel/runtime": "^7.0.0-beta.39",
+    "react-contextual": "^3.4.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.32",
-    "@babel/core": "7.0.0-beta.32",
-    "@babel/plugin-transform-runtime": "^7.0.0-beta.32",
-    "@babel/preset-env": "7.0.0-beta.32",
-    "@babel/preset-react": "7.0.0-beta.32",
-    "@babel/preset-stage-0": "7.0.0-beta.32",
+    "@babel/cli": "7.0.0-beta.39",
+    "@babel/core": "7.0.0-beta.39",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.39",
+    "@babel/preset-env": "7.0.0-beta.39",
+    "@babel/preset-react": "7.0.0-beta.39",
+    "@babel/preset-stage-0": "7.0.0-beta.39",
     "copyfiles": "^1.2.0",
     "json": "^9.0.6",
     "rimraf": "^2.6.2"

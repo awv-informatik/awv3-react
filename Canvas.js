@@ -1,25 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { moduleContext } from 'react-contextual'
 import CanvasImpl from 'awv3/core/canvas'
 
+@moduleContext()
 export default class Canvas extends React.PureComponent {
     static propTypes = { resolution: PropTypes.number }
-    static childContextTypes = { canvas: PropTypes.object }
     onContextMenu = event => event.preventDefault()
-
-    getChildContext() {
-        return { canvas: this.interface }
-    }
 
     constructor(props) {
         super()
         const options = {}
         if (props.resolution) options.resolution = props.resolution
         this.interface = new CanvasImpl(options)
-    }
-
-    getInterface() {
-        return this.interface
     }
 
     componentDidMount() {
@@ -35,15 +28,17 @@ export default class Canvas extends React.PureComponent {
     }
 
     render() {
-        const { resolution, children, style, ...props } = this.props
+        const { resolution, children, style, context: Context, ...props } = this.props
         return (
-            <div
-                onContextMenu={this.onContextMenu}
-                ref={ref => (this.ref = ref)}
-                {...props}
-                style={{ height: '100%', width: '100%', overflow: 'hidden', ...style }}>
-                {children}
-            </div>
+            <Context.Provider value={this.interface}>
+                <div
+                    onContextMenu={this.onContextMenu}
+                    ref={ref => (this.ref = ref)}
+                    {...props}
+                    style={{ height: '100%', width: '100%', overflow: 'hidden', ...style }}>
+                    {children}
+                </div>
+            </Context.Provider>
         )
     }
 }

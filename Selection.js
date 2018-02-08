@@ -1,13 +1,14 @@
 import * as THREE from 'three'
 import React from 'react'
 import PropTypes from 'prop-types'
+import { subscribe } from 'react-contextual'
 import Selector from 'awv3/session/selector'
 
 const HOVERED = THREE.Object3D.Events.Interaction.Hovered
 const UNHOVERED = THREE.Object3D.Events.Interaction.Unhovered
 
+@subscribe(SessionProvider.Context, session => ({ session }))
 export default class Selection extends React.PureComponent {
-    static contextTypes = { session: PropTypes.object }
     static propTypes = {
         enabled: PropTypes.bool,
         types: PropTypes.array,
@@ -39,7 +40,7 @@ export default class Selection extends React.PureComponent {
     }
 
     createSelector() {
-        this.sel = new Selector(this.context.session, {
+        this.sel = new Selector(this.props.session, {
             ids: this.state.ids,
             types: this.props.types,
             limit: this.props.limit,

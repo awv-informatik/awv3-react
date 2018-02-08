@@ -1,11 +1,14 @@
 import * as THREE from 'three'
 import React from 'react'
+import { subscribe, Subscribe } from 'react-contextual'
 import PropTypes from 'prop-types'
-import Canvas from './Canvas'
-import View from './View'
 import Object3 from 'awv3/three/object3'
 import Presentation from 'awv3/misc/presentation'
+import SessionProvider from './SessionProvider'
+import Canvas from './Canvas'
+import View from './View'
 
+@subscribe([SessionProvider.Context, View.Context], ([session, viewSession]) => ({ session, viewSession }))
 export default class Csys extends React.Component {
     static propTypes = {
         textures: PropTypes.array,
@@ -14,16 +17,13 @@ export default class Csys extends React.Component {
         opacity: PropTypes.number,
     }
     static defaultProps = { radius: 14, chamfer: 0.35, opacity: 1 }
-    static contextTypes = { session: PropTypes.object, view: PropTypes.object }
 
     componentWillUnmount() {
         this.unsub && this.unsub()
     }
 
-    static init(props, context, view) {
-        const { radius, chamfer, opacity } = props
-        const viewSession = context.view
-        const viewCsys = view
+    static init(props) {
+        const { radius, chamfer, opacity, viewSession, viewCsys } = props
         const viewCubeFaces = new THREE.Object3D()
 
         const shader = THREE.MeshBasicMaterial
@@ -172,14 +172,14 @@ export default class Csys extends React.Component {
         }
     }
 
-    async componentDidMount() {
-        Csys.init(this.props, this.context, this.ref.getInterface())
-    }
-
     render() {
         return (
             <Canvas style={this.props.style} resolution={2} className="csys">
-                <View ref={ref => (this.ref = ref)} up={this.context.view.camera.up.toArray()} />
+                <View ref={ref => (this.ref = ref)} up={this.props.viewSession.camera.up.toArray()}>
+                    <Subscribe to={View.Context} select={viewCsys => ({ viewCsys })}>
+                        {({ viewCsys }) => Csys.init({ ...this.props, viewCsys }) || null}
+                    </Subscribe>
+                </View>
             </Canvas>
         )
     }
