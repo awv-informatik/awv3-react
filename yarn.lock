@@ -1592,9 +1592,9 @@ react-broadcast@^0.7.0-rc.4:
     prop-types "^15.6.0"
     warning "^3.0.0"
 
-react-contextual@^3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/react-contextual/-/react-contextual-3.4.0.tgz#474d65b6ba5677ac358036933d912addf1d75abc"
+react-contextual@^3.5.0-beta.0:
+  version "3.5.0-beta.0"
+  resolved "https://registry.yarnpkg.com/react-contextual/-/react-contextual-3.5.0-beta.0.tgz#5adaff396d02c205af766abf610c105ea1ed6090"
   dependencies:
     react-broadcast "^0.7.0-rc.4"
 

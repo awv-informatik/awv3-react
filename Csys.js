@@ -175,7 +175,7 @@ export default class Csys extends React.Component {
     render() {
         return (
             <Canvas style={this.props.style} resolution={2} className="csys">
-                <View ref={ref => (this.ref = ref)} up={this.props.viewSession.camera.up.toArray()}>
+                <View up={this.props.viewSession.camera.up.toArray()}>
                     <Subscribe to={View.Context} select={viewCsys => ({ viewCsys })}>
                         {({ viewCsys }) => Csys.init({ ...this.props, viewCsys }) || null}
                     </Subscribe>

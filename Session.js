@@ -104,7 +104,7 @@ export default class Session extends React.PureComponent {
                     onDragEnter={this.onDragEnter}
                     onDragLeave={this.onDragLeave}
                     onDrop={this.onDrop}>
-                    <View ref={ref => (this.ref = ref)} up={up} stats={stats}>
+                    <View up={up} stats={stats}>
                         {csys.visible !== false && (
                             <Csys
                                 style={{

@@ -52,7 +52,7 @@ export default class SessionProvider extends React.PureComponent {
 
     constructor(props) {
         super()
-        this.interface = props.session || new SessionImpl(props)
+        this.interface = window.session = props.session || new SessionImpl(props)
     }
 
     componentWillUnmount() {

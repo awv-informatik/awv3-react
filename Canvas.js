@@ -27,13 +27,15 @@ export default class Canvas extends React.PureComponent {
         }
     }
 
+    catchRef = ref => this.ref = ref
+
     render() {
         const { resolution, children, style, context: Context, ...props } = this.props
         return (
             <Context.Provider value={this.interface}>
                 <div
                     onContextMenu={this.onContextMenu}
-                    ref={ref => (this.ref = ref)}
+                    ref={this.catchRef}
                     {...props}
                     style={{ height: '100%', width: '100%', overflow: 'hidden', ...style }}>
                     {children}
