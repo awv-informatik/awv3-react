@@ -14,7 +14,12 @@ import View from './View'
 import Csys from './Csys'
 import SessionProvider from './SessionProvider'
 
-@subscribe(SessionProvider.Context, session => ({ session }))
+const styles = {
+    canvas: { position: 'absolute', ransition: 'background-color 0.5s', top: 0, left: 0 },
+    csys: { position: 'absolute', bottom: 2, left: 2, width: 80, height: 80 },
+}
+
+@subscribe(SessionProvider, session => ({ session }))
 export default class Session extends React.PureComponent {
     static propTypes = {
         drop: PropTypes.bool,
@@ -50,7 +55,9 @@ export default class Session extends React.PureComponent {
                             let connection = session.addConnection(file.name)
                             connection.on('connected', async () => {
                                 if (onInitConnection) await onInitConnection(connection)
-                                const result = await session.store.dispatch(connectionActions.load(connection.id, data, extension))
+                                const result = await session.store.dispatch(
+                                    connectionActions.load(connection.id, data, extension),
+                                )
 
                                 connection.pool.view &&
                                     connection.pool.view
@@ -91,10 +98,7 @@ export default class Session extends React.PureComponent {
             <div className={className} style={style}>
                 <Canvas
                     style={{
-                        position: 'absolute',
-                        transition: 'background-color 0.5s',
-                        top: 0,
-                        left: 0,
+                        ...styles.canvas,
                         backgroundColor: onDrop ? 'rgba(0, 0, 0, 0.25)' : 'transparent',
                         ...canvasStyle,
                     }}
@@ -105,18 +109,7 @@ export default class Session extends React.PureComponent {
                     onDragLeave={this.onDragLeave}
                     onDrop={this.onDrop}>
                     <View up={up} stats={stats}>
-                        {csys.visible !== false && (
-                            <Csys
-                                style={{
-                                    position: 'absolute',
-                                    bottom: 2,
-                                    left: 2,
-                                    width: 80,
-                                    height: 80,
-                                }}
-                                {...csys}
-                            />
-                        )}
+                        {csys.visible !== false && <Csys style={style.csys} {...csys} />}
                     </View>
                 </Canvas>
                 {children}

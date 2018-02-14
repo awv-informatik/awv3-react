@@ -8,7 +8,7 @@ import SessionProvider from './SessionProvider'
 import Canvas from './Canvas'
 import View from './View'
 
-@subscribe([SessionProvider.Context, View.Context], ([session, viewSession]) => ({ session, viewSession }))
+@subscribe([SessionProvider, View], ([session, viewSession]) => ({ session, viewSession }))
 export default class Csys extends React.Component {
     static propTypes = {
         textures: PropTypes.array,
@@ -176,7 +176,7 @@ export default class Csys extends React.Component {
         return (
             <Canvas style={this.props.style} resolution={2} className="csys">
                 <View up={this.props.viewSession.camera.up.toArray()}>
-                    <Subscribe to={View.Context} select={viewCsys => ({ viewCsys })}>
+                    <Subscribe to={View} select={viewCsys => ({ viewCsys })}>
                         {({ viewCsys }) => Csys.init({ ...this.props, viewCsys }) || null}
                     </Subscribe>
                 </View>

@@ -7,7 +7,7 @@ import Selector from 'awv3/session/selector'
 const HOVERED = THREE.Object3D.Events.Interaction.Hovered
 const UNHOVERED = THREE.Object3D.Events.Interaction.Unhovered
 
-@subscribe(SessionProvider.Context, session => ({ session }))
+@subscribe(SessionProvider, session => ({ session }))
 export default class Selection extends React.PureComponent {
     static propTypes = {
         enabled: PropTypes.bool,
