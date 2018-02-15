@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import React from 'react'
 import { Provider } from 'react-redux'
-import { subscribe } from 'react-contextual'
+import { moduleContext, subscribe } from 'react-contextual'
 import PropTypes from 'prop-types'
 import Defaults from 'awv3/core/defaults'
 import pool from 'awv3/misc/presentation'
@@ -19,17 +19,20 @@ const styles = {
     csys: { position: 'absolute', bottom: 2, left: 2, width: 80, height: 80 },
 }
 
+@moduleContext()
 @subscribe(SessionProvider, session => ({ session }))
 export default class Session extends React.PureComponent {
     static propTypes = {
         drop: PropTypes.bool,
         onOpen: PropTypes.func,
         onInitConnection: PropTypes.func,
+        csys: PropTypes.object,
     }
 
     static defaultProps = {
         interpolatePoints: false,
         drop: false,
+        csys: { visible: true },
     }
 
     state = { onDrop: false }
@@ -93,7 +96,7 @@ export default class Session extends React.PureComponent {
 
     render() {
         const { onDrop } = this.state
-        const { style, canvasStyle, className, resolution, up, stats, csys, children } = this.props
+        const { style, canvasStyle, className, resolution, up, stats, csys, children, context } = this.props
         return (
             <div className={className} style={style}>
                 <Canvas
@@ -112,7 +115,7 @@ export default class Session extends React.PureComponent {
                         {csys.visible !== false && <Csys style={style.csys} {...csys} />}
                     </View>
                 </Canvas>
-                {children}
+                <context.Provider value={this} children={children} />
             </div>
         )
     }

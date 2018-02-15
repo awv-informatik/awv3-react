@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { subscribe } from 'react-contextual'
 import Selector from 'awv3/session/selector'
+import SessionProvider from './SessionProvider'
 
 const HOVERED = THREE.Object3D.Events.Interaction.Hovered
 const UNHOVERED = THREE.Object3D.Events.Interaction.Unhovered
