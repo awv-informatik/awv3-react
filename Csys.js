@@ -8,7 +8,7 @@ import SessionProvider from './SessionProvider'
 import Canvas from './Canvas'
 import View from './View'
 
-@subscribe([SessionProvider, View], ([session, viewSession]) => ({ session, viewSession }))
+@subscribe([SessionProvider, View], (session, viewSession) => ({ session, viewSession }))
 export default class Csys extends React.Component {
     static propTypes = {
         textures: PropTypes.array,

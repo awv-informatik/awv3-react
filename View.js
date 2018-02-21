@@ -8,7 +8,7 @@ import SessionProvider from './SessionProvider'
 import Canvas from './Canvas'
 
 @moduleContext()
-@subscribe([SessionProvider, Canvas], ([session, canvas]) => ({ session, canvas }))
+@subscribe([SessionProvider, Canvas], (session, canvas) => ({ session, canvas }))
 export default class View extends React.PureComponent {
     static propTypes = { up: PropTypes.array, stats: PropTypes.bool, ambientIntensity: PropTypes.number }
     static defaultProps = { up: Defaults.up, stats: Defaults.stats, ambientIntensity: Defaults.ambientIntensity }
