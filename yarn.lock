@@ -1598,9 +1598,9 @@ react-broadcast@^0.7.0-rc.4:
     prop-types "^15.6.0"
     warning "^3.0.0"
 
-react-contextual@^3.6.3:
-  version "3.6.3"
-  resolved "https://registry.yarnpkg.com/react-contextual/-/react-contextual-3.6.3.tgz#d90b0eb7fed029ff400d3d776a5387fcc3a51e83"
+react-contextual@^3.7.2:
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/react-contextual/-/react-contextual-3.7.2.tgz#280a1bdb30ca072dffc425bc1d180b89dc4bbec6"
   dependencies:
     react-broadcast "^0.7.0-rc.4"
 

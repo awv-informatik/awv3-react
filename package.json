@@ -23,7 +23,7 @@
   "homepage": "https://github.com/awv-informatik/awv3-react#readme",
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.40",
-    "react-contextual": "^3.6.3"
+    "react-contextual": "^3.7.2"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.40",
