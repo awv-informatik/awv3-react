@@ -9,7 +9,7 @@ import Canvas from './Canvas'
 import View from './View'
 
 @subscribe([SessionProvider, View], (session, viewSession) => ({ session, viewSession }))
-export default class Csys extends React.Component {
+export default class Csys extends React.PureComponent {
     static propTypes = {
         textures: PropTypes.array,
         radius: PropTypes.number,
@@ -23,6 +23,7 @@ export default class Csys extends React.Component {
     }
 
     static init(props) {
+        console.log("why")
         const { radius, chamfer, opacity, viewSession, viewCsys } = props
         const viewCubeFaces = new THREE.Object3D()
 
