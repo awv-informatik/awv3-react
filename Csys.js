@@ -23,7 +23,6 @@ export default class Csys extends React.PureComponent {
     }
 
     static init(props) {
-        console.log("why")
         const { radius, chamfer, opacity, viewSession, viewCsys } = props
         const viewCubeFaces = new THREE.Object3D()
 
@@ -174,6 +173,7 @@ export default class Csys extends React.PureComponent {
     }
 
     render() {
+        console.log("csys renders", this.props)
         return (
             <Canvas style={this.props.style} resolution={2} className="csys">
                 <View up={this.props.viewSession.camera.up.toArray()}>

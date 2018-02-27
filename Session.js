@@ -88,8 +88,8 @@ export default class Session extends React.PureComponent {
     onDragLeave = event => event.preventDefault() || this.setState({ onDrop: false })
     onDragOver = event => event.preventDefault()
     onDoubleClick = event =>
-        this.session.view &&
-        this.session.view
+        this.props.session.view &&
+        this.props.session.view
             .updateBounds()
             .controls.focus()
             .zoom()
@@ -97,6 +97,7 @@ export default class Session extends React.PureComponent {
     render() {
         const { onDrop } = this.state
         const { style, canvasStyle, className, resolution, up, stats, csys, children, context } = this.props
+        console.log("session renders")
         return (
             <div className={className} style={style}>
                 <Canvas
