@@ -32,7 +32,6 @@ export default class Session extends React.PureComponent {
     static defaultProps = {
         interpolatePoints: false,
         drop: false,
-        csys: { visible: true },
     }
 
     state = { onDrop: false }
@@ -97,7 +96,7 @@ export default class Session extends React.PureComponent {
     render() {
         const { onDrop } = this.state
         const { style, canvasStyle, className, resolution, up, stats, csys, children, context } = this.props
-        console.log("session renders")
+        console.log('session renders', csys)
         return (
             <div className={className} style={style}>
                 <Canvas
@@ -112,9 +111,11 @@ export default class Session extends React.PureComponent {
                     onDragEnter={this.onDragEnter}
                     onDragLeave={this.onDragLeave}
                     onDrop={this.onDrop}>
-                    <View up={up} stats={stats}>
-                        {csys.visible !== false && <Csys style={style.csys} {...csys} />}
-                    </View>
+                    {csys && csys.visible !== false && (
+                        <View up={up} stats={stats}>
+                            <Csys style={style.csys} {...csys} />
+                        </View>
+                    )}
                 </Canvas>
                 <context.Provider value={this} children={children} />
             </div>
