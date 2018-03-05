@@ -173,7 +173,6 @@ export default class Csys extends React.PureComponent {
     }
 
     render() {
-        console.log("csys renders", this.props)
         return (
             <Canvas style={this.props.style} resolution={2} className="csys">
                 <View up={this.props.viewSession.camera.up.toArray()}>

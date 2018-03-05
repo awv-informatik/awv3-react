@@ -8,7 +8,6 @@ import pool from 'awv3/misc/presentation'
 import protocol from 'awv3/communication/socketio'
 import SessionImpl from 'awv3/session'
 import { actions as connectionActions } from 'awv3/session/store/connections'
-import pack from 'awv3-protocol/pack'
 import Canvas from './Canvas'
 import View from './View'
 import Csys from './Csys'
@@ -41,48 +40,13 @@ export default class Session extends React.PureComponent {
     }
 
     open(files) {
-        const { session, drop, onInitConnection, onOpen } = this.props
-
-        files = Array.from(files)
+        const { session, onInitConnection, onOpen } = this.props
         this.setState({ onDrop: false })
-        if (drop) {
-            const promise = Promise.all(
-                files.map(file => {
-                    return new Promise(res => {
-                        let name = file.name.substr(0, file.name.lastIndexOf('.'))
-                        let extension = file.name.substr(file.name.lastIndexOf('.') + 1)
-                        var reader = new FileReader()
-                        reader.onload = event => {
-                            let data = pack(event.target.result)
-                            let connection = session.addConnection(file.name)
-                            connection.on('connected', async () => {
-                                if (onInitConnection) await onInitConnection(connection)
-                                const result = await session.store.dispatch(
-                                    connectionActions.load(connection.id, data, extension),
-                                )
-
-                                connection.pool.view &&
-                                    connection.pool.view
-                                        .updateBounds()
-                                        .controls.focus()
-                                        .zoom()
-                                        .rotate(Math.PI, Math.PI / 2)
-
-                                res({ ...result, connection })
-                            })
-                        }
-                        reader.readAsArrayBuffer(file)
-                    })
-                }),
-            )
-
-            if (onOpen) onOpen(promise)
-            return promise
-        }
+        return session.open(files, onInitConnection, onOpen)
     }
 
     openFile = event => this.open(event.target.files)
-    onDrop = event => event.preventDefault() || this.open(event.dataTransfer.files)
+    onDrop = event => event.preventDefault() || (this.props.drop && this.open(event.dataTransfer.files))
     onDragEnter = event => event.preventDefault() || this.setState({ onDrop: true })
     onDragLeave = event => event.preventDefault() || this.setState({ onDrop: false })
     onDragOver = event => event.preventDefault()
@@ -95,14 +59,13 @@ export default class Session extends React.PureComponent {
 
     render() {
         const { onDrop } = this.state
-        const { style, canvasStyle, className, resolution, up, stats, csys, children, context } = this.props
-        console.log('session renders', csys)
+        const { style, canvasStyle, className, resolution, up, stats, csys, children, context, drop } = this.props
         return (
             <div className={className} style={style}>
                 <Canvas
                     style={{
                         ...styles.canvas,
-                        backgroundColor: onDrop ? 'rgba(0, 0, 0, 0.25)' : 'transparent',
+                        backgroundColor: drop && onDrop ? 'rgba(0, 0, 0, 0.25)' : 'transparent',
                         ...canvasStyle,
                     }}
                     resolution={resolution}
@@ -111,11 +74,9 @@ export default class Session extends React.PureComponent {
                     onDragEnter={this.onDragEnter}
                     onDragLeave={this.onDragLeave}
                     onDrop={this.onDrop}>
-                    {csys && csys.visible !== false && (
-                        <View up={up} stats={stats}>
-                            <Csys style={style.csys} {...csys} />
-                        </View>
-                    )}
+                    <View up={up} stats={stats}>
+                        {csys && csys.visible !== false && <Csys style={style.csys} {...csys} />}
+                    </View>
                 </Canvas>
                 <context.Provider value={this} children={children} />
             </div>

@@ -60,7 +60,6 @@ export default class SessionProvider extends React.PureComponent {
     }
 
     render() {
-        console.log("session provider renders")
         const { className, style, children, context: Context } = this.props
         return (
             <Provider store={this.interface.store}>
