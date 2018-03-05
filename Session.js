@@ -46,9 +46,12 @@ export default class Session extends React.PureComponent {
     }
 
     openFile = event => this.open(event.target.files)
-    onDrop = event => event.preventDefault() || (this.props.drop && this.open(event.dataTransfer.files))
-    onDragEnter = event => event.preventDefault() || this.setState({ onDrop: true })
-    onDragLeave = event => event.preventDefault() || this.setState({ onDrop: false })
+    onDrop = event =>
+        event.preventDefault() ||
+        this.setState({ onDrop: false }, this.props.onDragLeave) ||
+        this.open(event.dataTransfer.files)
+    onDragEnter = event => event.preventDefault() || this.setState({ onDrop: true }, this.props.onDragEnter)
+    onDragLeave = event => event.preventDefault() || this.setState({ onDrop: false }, this.props.onDragLeave)
     onDragOver = event => event.preventDefault()
     onDoubleClick = event =>
         this.props.session.view &&
@@ -59,21 +62,30 @@ export default class Session extends React.PureComponent {
 
     render() {
         const { onDrop } = this.state
-        const { style, canvasStyle, className, resolution, up, stats, csys, children, context, drop } = this.props
+        const {
+            style,
+            canvasStyle,
+            className,
+            resolution,
+            up,
+            stats,
+            csys,
+            children,
+            context,
+            drop,
+            ...rest
+        } = this.props
+        console.log('session')
         return (
             <div className={className} style={style}>
                 <Canvas
-                    style={{
-                        ...styles.canvas,
-                        backgroundColor: drop && onDrop ? 'rgba(0, 0, 0, 0.25)' : 'transparent',
-                        ...canvasStyle,
-                    }}
+                    style={{ ...styles.canvas, backgroundColor: 'transparent', ...canvasStyle }}
                     resolution={resolution}
                     onDoubleClick={this.onDoubleClick}
-                    onDragOver={this.onDragOver}
-                    onDragEnter={this.onDragEnter}
-                    onDragLeave={this.onDragLeave}
-                    onDrop={this.onDrop}>
+                    onDragOver={drop ? this.onDragOver : null}
+                    onDragEnter={drop ? this.onDragEnter : null}
+                    onDragLeave={drop ? this.onDragLeave : null}
+                    onDrop={drop ? this.onDrop : null}>
                     <View up={up} stats={stats}>
                         {csys && csys.visible !== false && <Csys style={style.csys} {...csys} />}
                     </View>
