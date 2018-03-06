@@ -19,6 +19,7 @@ export default class SessionProvider extends React.PureComponent {
         url: PropTypes.string,
         materials: PropTypes.object,
         resources: PropTypes.object,
+        gpu: PropTypes.bool,
         resolution: PropTypes.number,
         up: PropTypes.array,
         stats: PropTypes.bool,
