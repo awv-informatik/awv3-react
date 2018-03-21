@@ -75,7 +75,6 @@ export default class Session extends React.PureComponent {
             drop,
             ...rest
         } = this.props
-        console.log('session', children)
         return (
             <div className={className} style={style}>
                 <Canvas
