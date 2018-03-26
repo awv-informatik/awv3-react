@@ -64,11 +64,7 @@ export default class SessionProvider extends React.PureComponent {
         const { className, style, children, context: Context } = this.props
         return (
             <Provider store={this.interface.store}>
-                <Context.Provider value={this.interface}>
-                    <div className={className} style={{ width: '100%', height: '100%', ...style }}>
-                        {children}
-                    </div>
-                </Context.Provider>
+                <Context.Provider value={this.interface}>{children}</Context.Provider>
             </Provider>
         )
     }

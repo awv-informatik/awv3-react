@@ -75,7 +75,6 @@ export default class Session extends React.PureComponent {
             drop,
             ...rest
         } = this.props
-        console.log('session', children)
         return (
             <div className={className} style={style}>
                 <Canvas
@@ -87,7 +86,7 @@ export default class Session extends React.PureComponent {
                     onDragLeave={drop ? this.onDragLeave : null}
                     onDrop={drop ? this.onDrop : null}>
                     <View up={up} stats={stats}>
-                        {csys && csys.visible !== false && <Csys style={style.csys} {...csys} />}
+                        {csys && csys.visible !== false && <Csys style={csys.style} {...csys} />}
                     </View>
                 </Canvas>
                 {children && <context.Provider value={this} children={children} />}
