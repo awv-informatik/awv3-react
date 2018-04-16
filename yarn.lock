@@ -882,7 +882,7 @@ convert-source-map@^1.1.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-1.5.0.tgz#9acd70851c6d5dfdd93d9282e5edf94a03ff46b5"
 
-copyfiles@^1.2.0:
+copyfiles@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/copyfiles/-/copyfiles-1.2.0.tgz#a8da3ac41aa2220ae29bd3c58b6984294f2c593c"
   dependencies:
@@ -1281,7 +1281,7 @@ json5@^0.5.0:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/json5/-/json5-0.5.1.tgz#1eade7acc012034ad84e2396767ead9fa5495821"
 
-json@^9.0.6:
+json@9.0.6:
   version "9.0.6"
   resolved "https://registry.yarnpkg.com/json/-/json-9.0.6.tgz#7972c2a5a48a42678db2730c7c2c4ee6e4e24585"
 
@@ -1529,9 +1529,9 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-contextual@^4.0.6-beta.2:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/react-contextual/-/react-contextual-4.0.6.tgz#2c84067460147bdd7ae304c7110851a6d63ae9c2"
+react-contextual@4.0.6-beta.2:
+  version "4.0.6-beta.2"
+  resolved "https://registry.yarnpkg.com/react-contextual/-/react-contextual-4.0.6-beta.2.tgz#e175cb06ed5919a18fc6e890cba910d4b94596c0"
   dependencies:
     tiny-uuid "^1.0.0"
 
@@ -1657,7 +1657,7 @@ resolve@^1.3.2:
   dependencies:
     path-parse "^1.0.5"
 
-rimraf@2, rimraf@^2.5.1, rimraf@^2.6.1, rimraf@^2.6.2:
+rimraf@2, rimraf@2.6.2, rimraf@^2.5.1, rimraf@^2.6.1:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
   dependencies:

@@ -23,7 +23,7 @@
   "homepage": "https://github.com/awv-informatik/awv3-react#readme",
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.40",
-    "react-contextual": "^4.0.6-beta.2"
+    "react-contextual": "4.0.6-beta.2"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.40",
@@ -32,9 +32,9 @@
     "@babel/preset-env": "7.0.0-beta.40",
     "@babel/preset-react": "7.0.0-beta.40",
     "@babel/preset-stage-0": "7.0.0-beta.40",
-    "copyfiles": "^1.2.0",
-    "json": "^9.0.6",
-    "rimraf": "^2.6.2"
+    "copyfiles": "1.2.0",
+    "json": "9.0.6",
+    "rimraf": "2.6.2"
   },
   "peerDependencies": {
     "awv3": ">=8",
