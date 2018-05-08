@@ -138,16 +138,17 @@ export default class Csys extends React.PureComponent {
         radius: PropTypes.number,
         chamfer: PropTypes.number,
         opacity: PropTypes.number,
-        showAxes: PropTypes.bool
+        showAxes: PropTypes.bool,
+        showFaceNames: PropTypes.bool,
     }
-    static defaultProps = { radius: 14, chamfer: 0.35, opacity: 1, showAxes: false }
+    static defaultProps = { radius: 14, chamfer: 0.35, opacity: 1, showAxes: false, showFaceNames: false}
 
     componentWillUnmount() {
         this.unsub && this.unsub()
     }
 
     static init(props) {
-        const { radius, chamfer, opacity, viewSession, viewCsys, showAxes } = props
+        const { radius, chamfer, opacity, viewSession, viewCsys, showAxes, showFaceNames } = props
         const viewCubeFaces = new THREE.Object3D()
         console.log("radius", radius)
 
@@ -161,7 +162,18 @@ export default class Csys extends React.PureComponent {
             opacity: opacity,
         }
 
+        const edgeNames = [
+            "LEFT",
+            "DOWN",
+            "BACK",
+            "FRONT",
+            "UP",
+            "RIGHT",
+        ]
+        const fontSizePx = 15
+
         let count = 0
+        let faceNum = 0
         for (var sx = -1; sx <= 1; sx++)
             for (var sy = -1; sy <= 1; sy++)
                 for (var sz = -1; sz <= 1; sz++) {
@@ -177,6 +189,20 @@ export default class Csys extends React.PureComponent {
                         //set material (load texture)
                         material = new shader({ ...shaderProps })
 
+                        if (showFaceNames) {
+                            let canvas = document.createElement('canvas')
+                            canvas.width = canvas.height = 64
+                            let context = canvas.getContext('2d')
+                            context.font = `Bold ${fontSizePx}px Arial`
+                            context.fillStyle = 'black'
+                            let w = context.measureText(edgeNames[faceNum]).width
+                            let h = fontSizePx
+                            context.fillText(edgeNames[faceNum], (canvas.width - w) / 2, (canvas.height + 0.8 * h) / 2)
+                            let texture = new THREE.Texture(canvas)
+                            texture.needsUpdate = true
+                            material.map = texture
+                        }
+
                         if (props.textures) {
                             new THREE.TextureLoader().load(props.textures[count++], function(texture) {
                                 material.map = texture
@@ -189,6 +215,7 @@ export default class Csys extends React.PureComponent {
                         axisX = sy === 0 ? new THREE.Vector3(sz, 0, -sx) : new THREE.Vector3(1, 0, 0)
                         axisY = normal.clone().cross(axisX)
                         ctr = normal.clone().multiplyScalar(radius)
+                        ++faceNum
                     }
                     if (cntNnz === 2) {
                         //calculate endpoints of the edge being chamfered
