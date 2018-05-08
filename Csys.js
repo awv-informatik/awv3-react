@@ -8,6 +8,129 @@ import SessionProvider from './SessionProvider'
 import Canvas from './Canvas'
 import View from './View'
 
+class Axes extends THREE.Object3D {
+    constructor(scene, camera, cubeProps) {
+        super()
+
+        const xAxisColor = 0xc23369
+        const yAxisColor = 0x33c269
+        const zAxisColor = 0x3369c2
+
+        const { radius } = cubeProps
+        this.camera = camera
+
+        const cylinderRadius = 0.84
+        const cylinderLength = 2 * radius
+
+        this.viewFound().then(view => {
+            if (this.destroyed) return
+            this.createInteraction({ priority: 1000 }).on(Object3.Events.Lifecycle.Rendered, this.onRender.bind(this), { //TODO: do not use .bind(..)
+                sync: false,
+            })
+        })
+
+        this.xAxisEndPos = new THREE.Vector3( 0, cylinderLength, 0 );
+        this.yAxisEndPos = new THREE.Vector3( 0, cylinderLength, 0 );
+        this.zAxisEndPos = new THREE.Vector3( 0, cylinderLength, 0 );
+
+        let material = new THREE.MeshBasicMaterial({
+            opacity: 1,
+            side: THREE.DoubleSide,
+            color: new THREE.Color(xAxisColor),
+        })
+        const cylinderGeometry = new THREE.CylinderGeometry(cylinderRadius, cylinderRadius, cylinderLength)
+        let axis = new THREE.Mesh(cylinderGeometry, material)
+        axis.position.set(0, -radius, radius)
+        axis.quaternion.setFromUnitVectors(
+            new THREE.Vector3(0, 1, 0),
+            new THREE.Vector3(1, 0, 0)
+        )
+        axis.updateMatrix()
+        this.xAxisEndPos.applyMatrix4(axis.matrix)
+        this.add(axis);
+
+        material = new THREE.MeshBasicMaterial({
+            opacity: 1,
+            side: THREE.DoubleSide,
+            color: new THREE.Color(yAxisColor),
+        })
+        axis = new THREE.Mesh(cylinderGeometry, material)
+        axis.position.set(-radius, 0, radius)
+        axis.quaternion.setFromUnitVectors(
+            new THREE.Vector3(0, 1, 0),
+            new THREE.Vector3(0,1,0)
+        )
+        axis.updateMatrix()
+        this.yAxisEndPos.applyMatrix4(axis.matrix)
+        this.add(axis);
+
+        material = new THREE.MeshBasicMaterial({
+            opacity: 1,
+            side: THREE.DoubleSide,
+            color: new THREE.Color(zAxisColor),
+        })
+        axis = new THREE.Mesh(cylinderGeometry, material)
+        axis.position.set(-radius, -radius, 0)
+        axis.quaternion.setFromUnitVectors(
+            new THREE.Vector3(0, 1, 0),
+            new THREE.Vector3(0, 0, -1)
+        )
+        axis.updateMatrix()
+        this.zAxisEndPos.applyMatrix4(axis.matrix)
+        this.add(axis);
+
+        let labelStyleStr = `pointer-events: none;
+            display: inline-block;
+            position: absolute;
+            left: 0px; top: 0px;
+            font-weight: bold;
+            font-size: 13px;`
+
+        this.xAxisLabel = document.createElement('div')
+        this.xAxisLabel.textContent = 'X'
+        this.xAxisLabel.style = labelStyleStr
+        scene.canvas.dom.appendChild(this.xAxisLabel)
+
+        this.yAxisLabel = document.createElement('div')
+        this.yAxisLabel.textContent = 'Y'
+        this.yAxisLabel.style = labelStyleStr
+        scene.canvas.dom.appendChild(this.yAxisLabel)
+
+        this.zAxisLabel = document.createElement('div')
+        this.zAxisLabel.textContent = 'Z'
+        this.zAxisLabel.style = labelStyleStr
+        scene.canvas.dom.appendChild(this.zAxisLabel)
+    }
+
+    calcWinPos = (ndcPos) => {
+        let winPos = ndcPos.clone().add(new THREE.Vector2(1, 1))
+        winPos.x *= (this.scene.canvas.views[0].width - 20) / 2
+        winPos.y *= (this.scene.canvas.views[0].height - 20) / 2
+        return winPos
+    }
+
+    invertY = (domPos) => {
+        var winPos = domPos.clone();
+        let view = this.scene.canvas.views[0]
+        winPos.y = view.height -  winPos.y;
+        return winPos;
+    }
+
+    onRender() {
+        let projectPnt = this.xAxisEndPos.clone().project(this.camera)
+        let pos2 = this.invertY(this.calcWinPos(new THREE.Vector2(projectPnt.x, projectPnt.y)))
+        this.xAxisLabel.style.transform = `translate3d(${pos2.x}px, ${pos2.y - 10}px, 0px)`
+
+        projectPnt = this.yAxisEndPos.clone().project(this.camera)
+        pos2 = this.invertY(this.calcWinPos(new THREE.Vector2(projectPnt.x, projectPnt.y)))
+        this.yAxisLabel.style.transform = `translate3d(${pos2.x}px, ${pos2.y - 10}px, 0px)`
+
+        projectPnt = this.zAxisEndPos.clone().project(this.camera)
+        pos2 = this.invertY(this.calcWinPos(new THREE.Vector2(projectPnt.x, projectPnt.y)))
+        this.zAxisLabel.style.transform = `translate3d(${pos2.x}px, ${pos2.y - 10}px, 0px)`
+    }
+}
+
 @subscribe([SessionProvider, View], (session, viewSession) => ({ session, viewSession }))
 export default class Csys extends React.PureComponent {
     static propTypes = {
@@ -15,16 +138,18 @@ export default class Csys extends React.PureComponent {
         radius: PropTypes.number,
         chamfer: PropTypes.number,
         opacity: PropTypes.number,
+        showAxes: PropTypes.bool
     }
-    static defaultProps = { radius: 14, chamfer: 0.35, opacity: 1 }
+    static defaultProps = { radius: 14, chamfer: 0.35, opacity: 1, showAxes: false }
 
     componentWillUnmount() {
         this.unsub && this.unsub()
     }
 
     static init(props) {
-        const { radius, chamfer, opacity, viewSession, viewCsys } = props
+        const { radius, chamfer, opacity, viewSession, viewCsys, showAxes } = props
         const viewCubeFaces = new THREE.Object3D()
+        console.log("radius", radius)
 
         const shader = THREE.MeshBasicMaterial
         const shaderProps = {
@@ -169,6 +294,11 @@ export default class Csys extends React.PureComponent {
                     .multiplyScalar(-100.0),
             )
             viewCsys.invalidate()
+        }
+
+        if (showAxes) {
+            let axes = new Axes(target, viewCsys.camera, props)
+            target.add(axes)
         }
     }
 
