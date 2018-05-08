@@ -12,9 +12,9 @@ class Axes extends THREE.Object3D {
     constructor(scene, camera, cubeProps) {
         super()
 
-        const xAxisColor = 0xc23369
-        const yAxisColor = 0x33c269
-        const zAxisColor = 0x3369c2
+        const xAxisColor = 'rgb(194, 51, 105)'//0xc23369
+        const yAxisColor = 'rgb(51, 194, 105)'//0x33c269
+        const zAxisColor = 'rgb(51, 105, 194)'//0x3369c2
 
         const { radius } = cubeProps
         this.camera = camera
@@ -88,17 +88,17 @@ class Axes extends THREE.Object3D {
 
         this.xAxisLabel = document.createElement('div')
         this.xAxisLabel.textContent = 'X'
-        this.xAxisLabel.style = labelStyleStr
+        this.xAxisLabel.style = (labelStyleStr+`color: ${xAxisColor};`)
         scene.canvas.dom.appendChild(this.xAxisLabel)
 
         this.yAxisLabel = document.createElement('div')
         this.yAxisLabel.textContent = 'Y'
-        this.yAxisLabel.style = labelStyleStr
+        this.yAxisLabel.style = (labelStyleStr+`color: ${yAxisColor};`)
         scene.canvas.dom.appendChild(this.yAxisLabel)
 
         this.zAxisLabel = document.createElement('div')
         this.zAxisLabel.textContent = 'Z'
-        this.zAxisLabel.style = labelStyleStr
+        this.zAxisLabel.style = (labelStyleStr+`color: ${zAxisColor};`)
         scene.canvas.dom.appendChild(this.zAxisLabel)
     }
 
