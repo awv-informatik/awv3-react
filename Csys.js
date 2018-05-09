@@ -150,7 +150,6 @@ export default class Csys extends React.PureComponent {
     static init(props) {
         const { radius, chamfer, opacity, viewSession, viewCsys, showAxes, showFaceNames } = props
         const viewCubeFaces = new THREE.Object3D()
-        console.log("radius", radius)
 
         const shader = THREE.MeshBasicMaterial
         const shaderProps = {
