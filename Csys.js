@@ -55,10 +55,10 @@ class Axes extends THREE.Object3D {
             color: new THREE.Color(yAxisColor),
         })
         axis = new THREE.Mesh(cylinderGeometry, material)
-        axis.position.set(-radius, 0, radius)
+        axis.position.set(-radius, -radius, 0)
         axis.quaternion.setFromUnitVectors(
             new THREE.Vector3(0, 1, 0),
-            new THREE.Vector3(0,1,0)
+            new THREE.Vector3(0, 0, -1)
         )
         axis.updateMatrix()
         this.yAxisEndPos.applyMatrix4(axis.matrix)
@@ -70,10 +70,10 @@ class Axes extends THREE.Object3D {
             color: new THREE.Color(zAxisColor),
         })
         axis = new THREE.Mesh(cylinderGeometry, material)
-        axis.position.set(-radius, -radius, 0)
+        axis.position.set(-radius, 0, radius)
         axis.quaternion.setFromUnitVectors(
             new THREE.Vector3(0, 1, 0),
-            new THREE.Vector3(0, 0, -1)
+            new THREE.Vector3(0, 1, 0)
         )
         axis.updateMatrix()
         this.zAxisEndPos.applyMatrix4(axis.matrix)
