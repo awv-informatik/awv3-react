@@ -53,13 +53,10 @@ export default class Session extends React.PureComponent {
     onDragEnter = event => event.preventDefault() || this.setState({ onDrop: true }, this.props.onDragEnter)
     onDragLeave = event => event.preventDefault() || this.setState({ onDrop: false }, this.props.onDragLeave)
     onDragOver = event => event.preventDefault()
-    onDoubleClick = event =>
-        this.props.session.view &&
-        this.props.session.view
-            .updateBounds()
-            .controls.focus()
-            .zoom()
-
+    onDoubleClick = event => {
+        if (this.props.session.pool.view)
+            this.props.session.pool.view.updateBounds().controls.focus().zoom()
+    }
     render() {
         const { onDrop } = this.state
         const {
