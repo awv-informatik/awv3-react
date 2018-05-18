@@ -24,14 +24,14 @@ class Axes extends THREE.Object3D {
 
         this.viewFound().then(view => {
             if (this.destroyed) return
-            this.createInteraction({ priority: 1000 }).on(Object3.Events.Lifecycle.Rendered, this.onRender.bind(this), { //TODO: do not use .bind(..)
+            this.createInteraction({ priority: 1000 }).on(Object3.Events.Lifecycle.Rendered, this.onRender, {
                 sync: false,
             })
         })
 
-        this.xAxisEndPos = new THREE.Vector3( 0, cylinderLength, 0 );
-        this.yAxisEndPos = new THREE.Vector3( 0, cylinderLength, 0 );
-        this.zAxisEndPos = new THREE.Vector3( 0, cylinderLength, 0 );
+        this.xAxisEndPos = new THREE.Vector3( 0, cylinderLength/2, 0 );
+        this.yAxisEndPos = new THREE.Vector3( 0, cylinderLength/2, 0 );
+        this.zAxisEndPos = new THREE.Vector3( 0, cylinderLength/2, 0 );
 
         let material = new THREE.MeshBasicMaterial({
             opacity: 1,
@@ -46,8 +46,13 @@ class Axes extends THREE.Object3D {
             new THREE.Vector3(1, 0, 0)
         )
         axis.updateMatrix()
+        console.log(this.xAxisEndPos.length())
         this.xAxisEndPos.applyMatrix4(axis.matrix)
+        console.log(this.xAxisEndPos.length())
         this.add(axis);
+        let label = this.createCaption('X', xAxisColor)
+        label.position.set(this.xAxisEndPos.x, this.xAxisEndPos.y, this.xAxisEndPos.z)
+        this.add(label)
 
         material = new THREE.MeshBasicMaterial({
             opacity: 1,
@@ -63,6 +68,9 @@ class Axes extends THREE.Object3D {
         axis.updateMatrix()
         this.yAxisEndPos.applyMatrix4(axis.matrix)
         this.add(axis);
+        label = this.createCaption('Y', yAxisColor)
+        label.position.set(this.yAxisEndPos.x, this.yAxisEndPos.y, this.yAxisEndPos.z)
+        this.add(label)
 
         material = new THREE.MeshBasicMaterial({
             opacity: 1,
@@ -78,6 +86,9 @@ class Axes extends THREE.Object3D {
         axis.updateMatrix()
         this.zAxisEndPos.applyMatrix4(axis.matrix)
         this.add(axis);
+        label = this.createCaption('Z', zAxisColor)
+        label.position.set(this.zAxisEndPos.x, this.zAxisEndPos.y, this.zAxisEndPos.z)
+        this.add(label)
 
         let labelStyleStr = `pointer-events: none;
             display: inline-block;
@@ -86,7 +97,7 @@ class Axes extends THREE.Object3D {
             font-weight: bold;
             font-size: 13px;`
 
-        this.xAxisLabel = document.createElement('div')
+/*        this.xAxisLabel = document.createElement('div')
         this.xAxisLabel.textContent = 'X'
         this.xAxisLabel.style = (labelStyleStr+`color: ${xAxisColor};`)
         scene.canvas.dom.appendChild(this.xAxisLabel)
@@ -99,7 +110,7 @@ class Axes extends THREE.Object3D {
         this.zAxisLabel = document.createElement('div')
         this.zAxisLabel.textContent = 'Z'
         this.zAxisLabel.style = (labelStyleStr+`color: ${zAxisColor};`)
-        scene.canvas.dom.appendChild(this.zAxisLabel)
+        scene.canvas.dom.appendChild(this.zAxisLabel)*/
     }
 
     calcWinPos = (ndcPos) => {
@@ -116,18 +127,26 @@ class Axes extends THREE.Object3D {
         return winPos;
     }
 
-    onRender() {
-        let projectPnt = this.xAxisEndPos.clone().project(this.camera)
-        let pos2 = this.invertY(this.calcWinPos(new THREE.Vector2(projectPnt.x, projectPnt.y)))
-        this.xAxisLabel.style.transform = `translate3d(${pos2.x}px, ${pos2.y - 10}px, 0px)`
+    createCaption = (text, color) => {
+        const fontFace = "Arial"
+        const fontSizePx = 70
 
-        projectPnt = this.yAxisEndPos.clone().project(this.camera)
-        pos2 = this.invertY(this.calcWinPos(new THREE.Vector2(projectPnt.x, projectPnt.y)))
-        this.yAxisLabel.style.transform = `translate3d(${pos2.x}px, ${pos2.y - 10}px, 0px)`
+        let canvas = document.createElement('canvas')
+        canvas.width = 200
+        canvas.height = 200
+        let context = canvas.getContext('2d')
+        context.font = fontSizePx + "px " + fontFace
+        context.fillStyle = color
+        let w = context.measureText(text).width
+        let h = fontSizePx
+        context.fillText(text, (canvas.width - w) / 2, (canvas.height - h) / 2)
 
-        projectPnt = this.zAxisEndPos.clone().project(this.camera)
-        pos2 = this.invertY(this.calcWinPos(new THREE.Vector2(projectPnt.x, projectPnt.y)))
-        this.zAxisLabel.style.transform = `translate3d(${pos2.x}px, ${pos2.y - 10}px, 0px)`
+        let texture = new THREE.Texture(canvas)
+        texture.needsUpdate = true
+        let spriteMaterial = new THREE.SpriteMaterial({map: texture})
+        let sprite = new THREE.Sprite(spriteMaterial)
+        sprite.scale.set(20, 20, 1)
+        return sprite
     }
 }
 
