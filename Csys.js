@@ -296,7 +296,8 @@ export default class Csys extends React.PureComponent {
             viewCubeEdges.add(lines)
         }
 
-        viewCubeFaces.quaternion.setFromUnitVectors(viewCubeFaces.up, viewCsys.camera.up)
+        let nullVector = new THREE.Vector3()
+        viewCubeFaces.quaternion.setFromUnitVectors(viewCubeFaces.up, nullVector.sub(viewCsys.camera.getWorldDirection()))
 
         const target = viewCsys.scene
         target.add(viewCubeFaces)
