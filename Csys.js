@@ -40,7 +40,7 @@ class Axes extends THREE.Object3D {
         })
         const cylinderGeometry = new THREE.CylinderGeometry(cylinderRadius, cylinderRadius, cylinderLength)
         let axis = new THREE.Mesh(cylinderGeometry, material)
-        axis.position.set(0, -radius, radius)
+        axis.position.set(0, -radius, -radius)
         axis.quaternion.setFromUnitVectors(
             new THREE.Vector3(0, 1, 0),
             new THREE.Vector3(1, 0, 0)
@@ -60,10 +60,10 @@ class Axes extends THREE.Object3D {
             color: new THREE.Color(yAxisColor),
         })
         axis = new THREE.Mesh(cylinderGeometry, material)
-        axis.position.set(-radius, -radius, 0)
+        axis.position.set(-radius, 0, -radius)
         axis.quaternion.setFromUnitVectors(
             new THREE.Vector3(0, 1, 0),
-            new THREE.Vector3(0, 0, -1)
+            new THREE.Vector3(0, 1, 0)
         )
         axis.updateMatrix()
         this.yAxisEndPos.applyMatrix4(axis.matrix)
@@ -78,10 +78,10 @@ class Axes extends THREE.Object3D {
             color: new THREE.Color(zAxisColor),
         })
         axis = new THREE.Mesh(cylinderGeometry, material)
-        axis.position.set(-radius, 0, radius)
+        axis.position.set(-radius, -radius, 0)
         axis.quaternion.setFromUnitVectors(
             new THREE.Vector3(0, 1, 0),
-            new THREE.Vector3(0, 1, 0)
+            new THREE.Vector3(0, 0, 1)
         )
         axis.updateMatrix()
         this.zAxisEndPos.applyMatrix4(axis.matrix)
@@ -91,7 +91,7 @@ class Axes extends THREE.Object3D {
         this.add(label)
     }
 
-    createCaption = (text, color) => { //TODO: copypaste from boundingBoxInfo/graphics.js
+    createCaption = (text, color) => { //TODO: copypaste from boundingBoxInfo/graphics.js (avw3 project)
         const fontFace = "Arial"
         const fontSizePx = 70
 
