@@ -29,9 +29,9 @@ class Axes extends THREE.Object3D {
             })
         })
 
-        this.xAxisEndPos = new THREE.Vector3( 0, cylinderLength/2, 0 );
-        this.yAxisEndPos = new THREE.Vector3( 0, cylinderLength/2, 0 );
-        this.zAxisEndPos = new THREE.Vector3( 0, cylinderLength/2, 0 );
+        this.xAxisEndPos = new THREE.Vector3( 0, cylinderLength/2, 0 )
+        this.yAxisEndPos = new THREE.Vector3( 0, cylinderLength/2, 0 )
+        this.zAxisEndPos = new THREE.Vector3( 0, cylinderLength/2, 0 )
 
         let material = new THREE.MeshBasicMaterial({
             opacity: 1,
@@ -49,7 +49,7 @@ class Axes extends THREE.Object3D {
         console.log(this.xAxisEndPos.length())
         this.xAxisEndPos.applyMatrix4(axis.matrix)
         console.log(this.xAxisEndPos.length())
-        this.add(axis);
+        this.add(axis)
         let label = this.createCaption('X', xAxisColor)
         label.position.set(this.xAxisEndPos.x, this.xAxisEndPos.y, this.xAxisEndPos.z)
         this.add(label)
@@ -67,7 +67,7 @@ class Axes extends THREE.Object3D {
         )
         axis.updateMatrix()
         this.yAxisEndPos.applyMatrix4(axis.matrix)
-        this.add(axis);
+        this.add(axis)
         label = this.createCaption('Y', yAxisColor)
         label.position.set(this.yAxisEndPos.x, this.yAxisEndPos.y, this.yAxisEndPos.z)
         this.add(label)
@@ -85,49 +85,13 @@ class Axes extends THREE.Object3D {
         )
         axis.updateMatrix()
         this.zAxisEndPos.applyMatrix4(axis.matrix)
-        this.add(axis);
+        this.add(axis)
         label = this.createCaption('Z', zAxisColor)
         label.position.set(this.zAxisEndPos.x, this.zAxisEndPos.y, this.zAxisEndPos.z)
         this.add(label)
-
-        let labelStyleStr = `pointer-events: none;
-            display: inline-block;
-            position: absolute;
-            left: 0px; top: 0px;
-            font-weight: bold;
-            font-size: 13px;`
-
-/*        this.xAxisLabel = document.createElement('div')
-        this.xAxisLabel.textContent = 'X'
-        this.xAxisLabel.style = (labelStyleStr+`color: ${xAxisColor};`)
-        scene.canvas.dom.appendChild(this.xAxisLabel)
-
-        this.yAxisLabel = document.createElement('div')
-        this.yAxisLabel.textContent = 'Y'
-        this.yAxisLabel.style = (labelStyleStr+`color: ${yAxisColor};`)
-        scene.canvas.dom.appendChild(this.yAxisLabel)
-
-        this.zAxisLabel = document.createElement('div')
-        this.zAxisLabel.textContent = 'Z'
-        this.zAxisLabel.style = (labelStyleStr+`color: ${zAxisColor};`)
-        scene.canvas.dom.appendChild(this.zAxisLabel)*/
     }
 
-    calcWinPos = (ndcPos) => {
-        let winPos = ndcPos.clone().add(new THREE.Vector2(1, 1))
-        winPos.x *= (this.scene.canvas.views[0].width - 20) / 2
-        winPos.y *= (this.scene.canvas.views[0].height - 20) / 2
-        return winPos
-    }
-
-    invertY = (domPos) => {
-        var winPos = domPos.clone();
-        let view = this.scene.canvas.views[0]
-        winPos.y = view.height -  winPos.y;
-        return winPos;
-    }
-
-    createCaption = (text, color) => {
+    createCaption = (text, color) => { //TODO: copypaste from boundingBoxInfo/graphics.js
         const fontFace = "Arial"
         const fontSizePx = 70
 
