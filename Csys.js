@@ -94,8 +94,7 @@ class Axes extends THREE.Object3D {
         const fontSizePx = 70
 
         let canvas = document.createElement('canvas')
-        canvas.width = 200
-        canvas.height = 200
+        canvas.width = canvas.height = 256 // should be always a power of two (2^x) (WebGL performance)
         let context = canvas.getContext('2d')
         context.font = fontSizePx + "px " + fontFace
         context.fillStyle = color
@@ -171,7 +170,7 @@ export default class Csys extends React.PureComponent {
 
                         if (showFaceNames) {
                             let canvas = document.createElement('canvas')
-                            canvas.width = canvas.height = 64
+                            canvas.width = canvas.height = 64 // should be always a power of two (2^x) (WebGL performance)
                             let context = canvas.getContext('2d')
                             context.fillStyle = 'white'
                             context.fillRect(0, 0, canvas.width, canvas.height)
