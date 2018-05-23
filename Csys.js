@@ -175,6 +175,8 @@ export default class Csys extends React.PureComponent {
                             let canvas = document.createElement('canvas')
                             canvas.width = canvas.height = 64
                             let context = canvas.getContext('2d')
+                            context.fillStyle = 'white'
+                            context.fillRect(0, 0, canvas.width, canvas.height)
                             context.font = `Bold ${fontSizePx}px Arial`
                             context.fillStyle = 'black'
                             let w = context.measureText(edgeNames[faceNum]).width
