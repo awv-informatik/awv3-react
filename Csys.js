@@ -250,8 +250,6 @@ export default class Csys extends React.PureComponent {
                     viewCubeFaces.add(face)
 
                     //add interaction
-                    let a2 = Math.acos(normal.y)
-                    let a1 = Math.abs(normal.y) < 1 ? Math.atan2(normal.x, normal.z) : 0
                     face.createInteraction().on({
                         [Object3.Events.Interaction.Hovered]: data => {
                             viewCsys.setCursor('pointer')
@@ -260,7 +258,12 @@ export default class Csys extends React.PureComponent {
                         [Object3.Events.Interaction.Unhovered]: data => {
                             data.material.animate({ color: new THREE.Color(0xffffff) }).start(1000)
                         },
-                        [Object3.Events.Interaction.Clicked]: () => viewSession.controls.rotate(a1, a2),
+                        [Object3.Events.Interaction.Clicked]: (clickedObj) => {
+                            let realNormal = normal.clone().applyQuaternion(clickedObj.object.parent.quaternion)
+                            let a2 = Math.acos(realNormal.y)
+                            let a1 = Math.abs(realNormal.y) < 1 ? Math.atan2(realNormal.x, realNormal.z) : 0
+                            viewSession.controls.rotate(a1, a2)
+                        }
                     })
                 }
         //add wireframe geometry
