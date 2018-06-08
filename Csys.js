@@ -279,7 +279,9 @@ export default class Csys extends React.PureComponent {
         }
 
         let nullVector = new THREE.Vector3()
-        viewCubeFaces.quaternion.setFromUnitVectors(viewCubeFaces.up, nullVector.sub(viewCsys.camera.getWorldDirection()))
+        let worldDir = new THREE.Vector3()
+        viewCsys.camera.getWorldDirection(worldDir)
+        viewCubeFaces.quaternion.setFromUnitVectors(viewCubeFaces.up, nullVector.sub(worldDir))
 
         const target = viewCsys.scene
         target.add(viewCubeFaces)
@@ -296,12 +298,9 @@ export default class Csys extends React.PureComponent {
                 dst.aspect = oldAspect
                 dst.updateProjectionMatrix()
             }
-            dst.position.copy(
-                src
-                    .getWorldDirection()
-                    .clone()
-                    .multiplyScalar(-100.0),
-            )
+            let worldDir = new THREE.Vector3()
+            src.getWorldDirection(worldDir)
+            dst.position.copy(worldDir.clone().multiplyScalar(-100.0))
             viewCsys.invalidate()
         }
 
