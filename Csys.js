@@ -294,8 +294,11 @@ export default class Csys extends React.PureComponent {
                         },
                         [Object3.Events.Interaction.Clicked]: (clickedObj) => {
                             let realNormal = normal.clone().applyQuaternion(clickedObj.object.parent.quaternion)
-                            let a2 = Math.acos(realNormal.y)
-                            let a1 = Math.abs(realNormal.y) < 1 ? Math.atan2(realNormal.x, realNormal.z) : 0
+                            realNormal.normalize()
+                            let normalUpComponent = cameraUp.z === 1 ? realNormal.z : realNormal.y
+                            let normalDepthComponent = cameraUp.z === 1 ? -realNormal.y : realNormal.z
+                            let a2 = Math.acos(normalUpComponent)
+                            let a1 = Math.abs(normalUpComponent) < 1 ? Math.atan2(realNormal.x, normalDepthComponent) : 0
                             viewSession.controls.rotate(a1, a2)
                         }
                     })
