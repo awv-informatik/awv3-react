@@ -139,7 +139,16 @@ export default class Csys extends React.PureComponent {
             polygonOffsetUnits: 5.0,
             transparent: opacity < 1,
             opacity: opacity,
+            side: THREE.DoubleSide
         }
+
+        let cameraDir = new THREE.Vector3()
+        let cameraUp = props.startUp ? new THREE.Vector3().fromArray(props.startUp) : new THREE.Vector3(0,0,1)
+        cameraUp.normalize()
+        viewCsys.camera.getWorldDirection(cameraDir)
+        cameraDir.normalize()
+        // Rotate cube. FRONT face should be on XZ plane.
+        viewCubeFaces.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 1))
 
         const edgeNames = [
             "LEFT",
@@ -196,6 +205,30 @@ export default class Csys extends React.PureComponent {
                         axisX = sy === 0 ? new THREE.Vector3(sz, 0, -sx) : new THREE.Vector3(1, 0, 0)
                         axisY = normal.clone().cross(axisX)
                         ctr = normal.clone().multiplyScalar(radius)
+                        let realViewCubeUp = viewCubeFaces.up.clone().applyQuaternion(viewCubeFaces.quaternion).normalize()
+                        // If camera have custom up vector (not equal to (0,0,1)), turn labels to make them readable
+                        if (!realViewCubeUp.equals(cameraUp)) {
+                            let realNormal = normal.clone().applyQuaternion(viewCubeFaces.quaternion).normalize()
+                            // let realAxisX = axisX.clone().applyQuaternion(viewCubeFaces.quaternion).normalize()
+                            let realAxisY = axisY.clone().applyQuaternion(viewCubeFaces.quaternion).normalize()
+                            let quaternion = new THREE.Quaternion().setFromUnitVectors(realAxisY, cameraUp)
+                            if (realNormal.clone().cross(cameraUp).length() === 1) { //Rotate side faces
+                                if (realAxisY.clone().multiplyScalar(-1).equals(cameraUp)) {
+                                    axisX.applyQuaternion(quaternion)
+                                    quaternion = new THREE.Quaternion().setFromUnitVectors(realAxisY, realNormal)
+                                    let quaternion2 = new THREE.Quaternion().setFromUnitVectors(realNormal, cameraUp)
+                                    quaternion.multiply(quaternion2)
+                                    axisY.applyQuaternion(quaternion)
+                                } else {
+                                    axisX.applyQuaternion(quaternion)
+                                    axisY.applyQuaternion(quaternion)
+                                }
+                            } else if (realNormal.equals(cameraUp)) { //Rotate top face
+                                quaternion.setFromUnitVectors(viewCubeFaces.up, viewCubeFaces.up.clone().multiplyScalar(-1))
+                                axisX.applyQuaternion(quaternion)
+                                axisY.applyQuaternion(quaternion)
+                            }
+                        }
                         ++faceNum
                     }
                     if (cntNnz === 2) {
@@ -242,6 +275,7 @@ export default class Csys extends React.PureComponent {
                     var face = new THREE.Mesh(geometry, material)
                     //set coordinate system to THREE object
                     var matr = new THREE.Matrix4()
+
                     matr.makeBasis(axisX, axisY, normal)
                     matr.setPosition(ctr)
                     matr.decompose(face.position, face.quaternion, face.scale)
@@ -280,11 +314,6 @@ export default class Csys extends React.PureComponent {
             lines.updateMatrix()
             viewCubeEdges.add(lines)
         }
-
-        let nullVector = new THREE.Vector3()
-        let worldDir = new THREE.Vector3()
-        viewCsys.camera.getWorldDirection(worldDir)
-        viewCubeFaces.quaternion.setFromUnitVectors(viewCubeFaces.up, nullVector.sub(worldDir))
 
         const target = viewCsys.scene
         target.add(viewCubeFaces)

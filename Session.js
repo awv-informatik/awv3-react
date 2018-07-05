@@ -83,7 +83,7 @@ export default class Session extends React.PureComponent {
                     onDragLeave={drop ? this.onDragLeave : null}
                     onDrop={drop ? this.onDrop : null}>
                     <View up={up} stats={stats}>
-                        {csys && csys.visible !== false && <Csys style={csys.style} {...csys} />}
+                        {csys && csys.visible !== false && <Csys style={csys.style} {...csys} startUp={up} />}
                     </View>
                 </Canvas>
                 {children && <context.Provider value={this} children={children} />}
