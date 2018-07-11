@@ -7,6 +7,7 @@ import Presentation from 'awv3/misc/presentation'
 import SessionProvider from './SessionProvider'
 import Canvas from './Canvas'
 import View from './View'
+import { createCaption } from 'awv3/three/helpers'
 
 class Axes extends THREE.Object3D {
     constructor(scene, camera, cubeProps) {
@@ -48,7 +49,7 @@ class Axes extends THREE.Object3D {
         axis.updateMatrix()
         this.xAxisEndPos.applyMatrix4(axis.matrix)
         this.add(axis)
-        let label = this.createCaption('X', xAxisColor)
+        let label = createCaption('X', xAxisColor)
         label.position.set(this.xAxisEndPos.x, this.xAxisEndPos.y, this.xAxisEndPos.z)
         this.add(label)
 
@@ -66,7 +67,7 @@ class Axes extends THREE.Object3D {
         axis.updateMatrix()
         this.yAxisEndPos.applyMatrix4(axis.matrix)
         this.add(axis)
-        label = this.createCaption('Y', yAxisColor)
+        label = createCaption('Y', yAxisColor)
         label.position.set(this.yAxisEndPos.x, this.yAxisEndPos.y, this.yAxisEndPos.z)
         this.add(label)
 
@@ -84,30 +85,9 @@ class Axes extends THREE.Object3D {
         axis.updateMatrix()
         this.zAxisEndPos.applyMatrix4(axis.matrix)
         this.add(axis)
-        label = this.createCaption('Z', zAxisColor)
+        label = createCaption('Z', zAxisColor)
         label.position.set(this.zAxisEndPos.x, this.zAxisEndPos.y, this.zAxisEndPos.z)
         this.add(label)
-    }
-
-    createCaption = (text, color) => { //TODO: copypaste from boundingBoxInfo/graphics.js (avw3 project)
-        const fontFace = "Arial"
-        const fontSizePx = 70
-
-        let canvas = document.createElement('canvas')
-        canvas.width = canvas.height = 256 // should be always a power of two (2^x) (WebGL performance)
-        let context = canvas.getContext('2d')
-        context.font = fontSizePx + "px " + fontFace
-        context.fillStyle = color
-        let w = context.measureText(text).width
-        let h = fontSizePx
-        context.fillText(text, (canvas.width - w) / 2, (canvas.height - h) / 2)
-
-        let texture = new THREE.Texture(canvas)
-        texture.needsUpdate = true
-        let spriteMaterial = new THREE.SpriteMaterial({map: texture})
-        let sprite = new THREE.Sprite(spriteMaterial)
-        sprite.scale.set(20, 20, 1)
-        return sprite
     }
 }
 
