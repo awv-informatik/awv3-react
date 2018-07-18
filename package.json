@@ -22,17 +22,17 @@
   },
   "homepage": "https://github.com/awv-informatik/awv3-react#readme",
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.40",
-    "react-contextual": "4.0.6-beta.2"
+    "@babel/runtime": "7.0.0-beta.54",
+    "react-contextual": "5.0.2"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.40",
-    "@babel/core": "7.0.0-beta.40",
-    "@babel/plugin-transform-runtime": "7.0.0-beta.40",
-    "@babel/preset-env": "7.0.0-beta.40",
-    "@babel/preset-react": "7.0.0-beta.40",
-    "@babel/preset-stage-0": "7.0.0-beta.40",
-    "copyfiles": "1.2.0",
+    "@babel/cli": "7.0.0-beta.54",
+    "@babel/core": "7.0.0-beta.54",
+    "@babel/plugin-transform-runtime": "7.0.0-beta.54",
+    "@babel/preset-env": "7.0.0-beta.54",
+    "@babel/preset-react": "7.0.0-beta.54",
+    "@babel/preset-stage-0": "7.0.0-beta.54",
+    "copyfiles": "2.0.0",
     "json": "9.0.6",
     "rimraf": "2.6.2"
   },
