@@ -10,31 +10,31 @@ import Canvas from './Canvas'
 @moduleContext()
 @subscribe([SessionProvider, Canvas], (session, canvas) => ({ session, canvas }))
 export default class View extends React.PureComponent {
-    static propTypes = { up: PropTypes.array, stats: PropTypes.bool, ambientIntensity: PropTypes.number }
-    static defaultProps = { up: Defaults.up, stats: Defaults.stats, ambientIntensity: Defaults.ambientIntensity }
+  static propTypes = { up: PropTypes.array, stats: PropTypes.bool, ambientIntensity: PropTypes.number }
+  static defaultProps = { up: Defaults.up, stats: Defaults.stats, ambientIntensity: Defaults.ambientIntensity }
 
-    constructor(props) {
-        super()
-        this.interface = new ViewImpl(props.canvas, {
-            up: new THREE.Vector3(...props.up),
-            ambientIntensity: props.ambientIntensity,
-            stats: props.stats,
-        })
-    }
+  constructor(props) {
+    super()
+    this.interface = new ViewImpl(props.canvas, {
+      up: new THREE.Vector3(...props.up),
+      ambientIntensity: props.ambientIntensity,
+      stats: props.stats,
+    })
+  }
 
-    componentDidMount() {
-        this.interface.scene.add(this.props.session.pool)
-    }
+  componentDidMount() {
+    this.interface.scene.add(this.props.session.pool)
+  }
 
-    componentWillUnmount() {
-        if (this.interface) {
-            this.interface.destroy()
-            delete this.interface
-        }
+  componentWillUnmount() {
+    if (this.interface) {
+      this.interface.destroy()
+      delete this.interface
     }
+  }
 
-    render() {
-        const Context = this.props.context
-        return <Context.Provider value={this.interface} children={this.props.children || null} />
-    }
+  render() {
+    const Context = this.props.context
+    return <Context.Provider value={this.interface} children={this.props.children || null} />
+  }
 }

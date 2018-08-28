@@ -1,14 +1,8 @@
 {
-    "plugins": [
-        [
-            "@babel/transform-runtime",
-            {
-                "helpers": true,
-                "polyfill": false,
-                "regenerator": true,
-                "moduleName": "@babel/runtime"
-            }
-        ]
-    ],
-    "presets": [["@babel/preset-env", { "loose": true, "modules": false }], "@babel/preset-stage-0", "@babel/preset-react"]
+  "plugins": [
+    ["@babel/transform-runtime", { "helpers": true, "regenerator": true }],
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/proposal-class-properties", { "loose": true }]
+  ],
+  "presets": [["@babel/preset-env", { "loose": true, "modules": false }], "@babel/preset-react"]
 }

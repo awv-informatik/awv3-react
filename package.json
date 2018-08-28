@@ -11,6 +11,25 @@
     "clean": "rimraf ./dist",
     "copy": "copyfiles package.json README.md .gitignore .npmignore dist && json -I -f dist/package.json -e \"this.private=false\""
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "prettier": {
+    "semi": false,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "jsxBracketSameLine": true,
+    "tabWidth": 2,
+    "printWidth": 120
+  },
+  "lint-staged": {
+    "*.{js,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/awv-informatik/awv3-react.git"
@@ -22,18 +41,22 @@
   },
   "homepage": "https://github.com/awv-informatik/awv3-react#readme",
   "dependencies": {
-    "@babel/runtime": "7.0.0-beta.54",
+    "@babel/runtime": "^7.0.0",
     "react-contextual": "5.0.2"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.54",
-    "@babel/core": "7.0.0-beta.54",
-    "@babel/plugin-transform-runtime": "7.0.0-beta.54",
-    "@babel/preset-env": "7.0.0-beta.54",
-    "@babel/preset-react": "7.0.0-beta.54",
-    "@babel/preset-stage-0": "7.0.0-beta.54",
+    "@babel/cli": "7.0.0",
+    "@babel/core": "7.0.0",
+    "@babel/plugin-proposal-class-properties": "7.0.0",
+    "@babel/plugin-proposal-decorators": "7.0.0",
+    "@babel/plugin-transform-runtime": "7.0.0",
+    "@babel/preset-env": "7.0.0",
+    "@babel/preset-react": "7.0.0",
     "copyfiles": "2.0.0",
+    "husky": "^1.0.0-rc.13",
     "json": "9.0.6",
+    "lint-staged": "^7.2.2",
+    "prettier": "^1.14.2",
     "rimraf": "2.6.2"
   },
   "peerDependencies": {
