@@ -2141,9 +2141,9 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-contextual@5.0.2:
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/react-contextual/-/react-contextual-5.0.2.tgz#039c8ac9368af71049bb0433b2bf4cde63393721"
+react-contextual@4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/react-contextual/-/react-contextual-4.0.6.tgz#2c84067460147bdd7ae304c7110851a6d63ae9c2"
   dependencies:
     tiny-uuid "^1.0.0"
 
