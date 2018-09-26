@@ -77,7 +77,6 @@ class Axes extends THREE.Object3D {
 
 export default class ViewCube {
   static init(props) {
-    console.log('ViewCube.init called...')
     const { radius, chamfer, opacity, viewSession, viewCsys, showAxes, showFaceNames } = props
     const viewCubeFaces = new THREE.Object3D()
 
