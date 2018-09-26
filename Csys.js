@@ -82,23 +82,9 @@ class Axes extends THREE.Object3D {
   }
 }
 
-@subscribe([SessionProvider, View], (session, viewSession) => ({ session, viewSession }))
-export default class Csys extends React.PureComponent {
-  static propTypes = {
-    textures: PropTypes.array,
-    radius: PropTypes.number,
-    chamfer: PropTypes.number,
-    opacity: PropTypes.number,
-    showAxes: PropTypes.bool,
-    showFaceNames: PropTypes.bool,
-  }
-  static defaultProps = { radius: 14, chamfer: 0.35, opacity: 1, showAxes: false, showFaceNames: false }
-
-  componentWillUnmount() {
-    this.unsub && this.unsub()
-  }
-
+export class ViewCube {
   static init(props) {
+    console.log('ViewCube.init called...')
     const { radius, chamfer, opacity, viewSession, viewCsys, showAxes, showFaceNames } = props
     const viewCubeFaces = new THREE.Object3D()
 
@@ -329,13 +315,30 @@ export default class Csys extends React.PureComponent {
       target.add(axes)
     }
   }
+}
+
+@subscribe([SessionProvider, View], (session, viewSession) => ({ session, viewSession }))
+export default class Csys extends React.PureComponent {
+  static propTypes = {
+    textures: PropTypes.array,
+    radius: PropTypes.number,
+    chamfer: PropTypes.number,
+    opacity: PropTypes.number,
+    showAxes: PropTypes.bool,
+    showFaceNames: PropTypes.bool,
+  }
+  static defaultProps = { radius: 14, chamfer: 0.35, opacity: 1, showAxes: false, showFaceNames: false }
+
+  componentWillUnmount() {
+    this.unsub && this.unsub()
+  }
 
   render() {
     return (
       <Canvas style={this.props.style} resolution={2} className="csys">
         <View up={this.props.viewSession.camera.up.toArray()}>
           <Subscribe to={View} select={viewCsys => ({ viewCsys })}>
-            {({ viewCsys }) => Csys.init({ ...this.props, viewCsys }) || null}
+            {({ viewCsys }) => ViewCube.init({ ...this.props, viewCsys }) || null}
           </Subscribe>
         </View>
       </Canvas>
