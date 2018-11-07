@@ -23,7 +23,7 @@ export default class View extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.interface.scene.add(this.props.session.pool)
+    this.props.pool !== undefined && this.interface.scene.add(this.props.pool)
   }
 
   componentWillUnmount() {
