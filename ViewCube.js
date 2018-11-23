@@ -88,16 +88,7 @@ export default class ViewCube {
       polygonOffsetUnits: 5.0,
       transparent: opacity < 1,
       opacity: opacity,
-      side: THREE.DoubleSide,
     }
-
-    let cameraDir = new THREE.Vector3()
-    let cameraUp = props.startUp ? new THREE.Vector3().fromArray(props.startUp) : new THREE.Vector3(0, 0, 1)
-    cameraUp.normalize()
-    viewCsys.camera.getWorldDirection(cameraDir)
-    cameraDir.normalize()
-    // Rotate cube. FRONT face should be on XZ plane.
-    viewCubeFaces.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 1))
 
     const edgeNames = ['LEFT', 'DOWN', 'BACK', 'FRONT', 'UP', 'RIGHT']
     const fontSizePx = 15
@@ -147,51 +138,6 @@ export default class ViewCube {
             axisX = sy === 0 ? new THREE.Vector3(sz, 0, -sx) : new THREE.Vector3(1, 0, 0)
             axisY = normal.clone().cross(axisX)
             ctr = normal.clone().multiplyScalar(radius)
-            let realViewCubeUp = viewCubeFaces.up
-              .clone()
-              .applyQuaternion(viewCubeFaces.quaternion)
-              .normalize()
-            // If camera have custom up vector (not equal to (0,0,1)), turn labels to make them readable
-            if (!realViewCubeUp.equals(cameraUp)) {
-              let realNormal = normal
-                .clone()
-                .applyQuaternion(viewCubeFaces.quaternion)
-                .normalize()
-              // let realAxisX = axisX.clone().applyQuaternion(viewCubeFaces.quaternion).normalize()
-              let realAxisY = axisY
-                .clone()
-                .applyQuaternion(viewCubeFaces.quaternion)
-                .normalize()
-              let quaternion = new THREE.Quaternion().setFromUnitVectors(realAxisY, cameraUp)
-              if (
-                realNormal
-                  .clone()
-                  .cross(cameraUp)
-                  .length() === 1
-              ) {
-                //Rotate side faces
-                if (
-                  realAxisY
-                    .clone()
-                    .multiplyScalar(-1)
-                    .equals(cameraUp)
-                ) {
-                  axisX.applyQuaternion(quaternion)
-                  quaternion = new THREE.Quaternion().setFromUnitVectors(realAxisY, realNormal)
-                  let quaternion2 = new THREE.Quaternion().setFromUnitVectors(realNormal, cameraUp)
-                  quaternion.multiply(quaternion2)
-                  axisY.applyQuaternion(quaternion)
-                } else {
-                  axisX.applyQuaternion(quaternion)
-                  axisY.applyQuaternion(quaternion)
-                }
-              } else if (realNormal.equals(cameraUp)) {
-                //Rotate top face
-                quaternion.setFromUnitVectors(viewCubeFaces.up, viewCubeFaces.up.clone().multiplyScalar(-1))
-                axisX.applyQuaternion(quaternion)
-                axisY.applyQuaternion(quaternion)
-              }
-            }
             ++faceNum
           }
           if (cntNnz === 2) {
@@ -247,6 +193,9 @@ export default class ViewCube {
           viewCubeFaces.add(face)
 
           //add interaction
+
+          let a2 = Math.acos(normal.y)
+          let a1 = Math.abs(normal.y) < 1 ? Math.atan2(normal.x, normal.z) : 0
           face.createInteraction().on({
             [Object3.Events.Interaction.Hovered]: data => {
               viewCsys.setCursor('pointer')
@@ -256,13 +205,7 @@ export default class ViewCube {
               data.material.animate({ color: new THREE.Color(0xffffff) }).start(1000)
             },
             [Object3.Events.Interaction.Clicked]: clickedObj => {
-              let realNormal = normal.clone().applyQuaternion(clickedObj.object.parent.quaternion)
-              realNormal.normalize()
-              let normalUpComponent = cameraUp.z === 1 ? realNormal.z : realNormal.y
-              let normalDepthComponent = cameraUp.z === 1 ? -realNormal.y : realNormal.z
-              let a2 = Math.acos(normalUpComponent)
-              let a1 = Math.abs(normalUpComponent) < 1 ? Math.atan2(realNormal.x, normalDepthComponent) : 0
-              viewSession.controls.rotate(a1, a2)
+              viewSession.controls.rotate(a1, a2) // Works properly only if camera.up === (0,0,1)
             },
           })
         }
@@ -280,6 +223,9 @@ export default class ViewCube {
       lines.updateMatrix()
       viewCubeEdges.add(lines)
     }
+
+    // Works properly only if camera.up === (0,0,1)
+    viewCubeFaces.quaternion.setFromUnitVectors(viewCubeFaces.up, viewCsys.camera.up)
 
     const target = viewCsys.scene
     target.add(viewCubeFaces)
