@@ -13,3 +13,4 @@ $RECYCLE.BIN/
 # User-specific stuff:
 /.idea/
 *.tgz
+package-lock.json
